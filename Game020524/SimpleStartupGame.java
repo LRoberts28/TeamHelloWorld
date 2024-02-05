@@ -25,5 +25,6 @@ public class SimpleStartupGame {
                 System.out.println("You took " + numOfGuesses + " guesses");
             } // close if
         }  // close while
+        helper.closeScanner();
     }
 }
