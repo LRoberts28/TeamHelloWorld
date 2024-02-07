@@ -1,8 +1,8 @@
-package Game020524;
+package StartupGame020324;
 import java.util.ArrayList;
 
 
-public class SimpleStartupTestDrive {
+public class StartupTestDrive {       //Tester method for startup game
     public static void main(String[] args) {
         Startup dot = new Startup();
         
