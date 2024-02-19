@@ -1,0 +1,191 @@
+Packages to be imported:
+    1. ArrayList
+    2. Scanner
+    3. BufferedWritter
+
+
+
+-------Class-------
+	Properties
+	Methods
+	User
+	+email: String
++password: String
++name: String
++securityClearance: enum
++description: String //written
+  to embedded file using
+  BufferedWriter
++tags: Enum
+	+accountRecovery()
++addTags()
++getEmail()
++getPassword()
++getName()
++getSecurity()
++getTags()
++logIn()
++save()
++setPassword()
++setEmail()
++setName()
++setSecurity()
++switchUser()
++readDesc()
++removeUser()
++writeDesc()
+------------------------------------------
+
+
+-------Employee-------
+*User
+	//securityClearance: Low
++address: String
++phone: String
++age: short
++currentJob: Job
++resume: .pdf file //uploaded
+  pdf file, cannot be changed
+  in program
++notes: String //written to
+  embedded file using
+  BufferedWritter
++jobHistory: ArrayList<Job>
++tasksPreformed: int
++softSkills:ArrayList<Skill>
++talents:ArrayList<String>
++gifts:ArrayList<String>
++evals:
+  ArrayList<Evaluations>
+	+addJobHistory()
++addSoftSkill()
++addTalent()
++addGift()
++addEval()
++getChangeLog()
++getAddress()
++getPhone()
++getAge()
++getJob()
++getJobHistory()
++getTasksPreformed()
++getSoftSkills()
++getTalents()
++getGifts()
++getEvals()
++setAge()
++setAddress()
++setPhone()
++setAge()
++setCurrentJob()
++setTasksPreformed()
++readNotes()
++removeJobHistory()
++removeSoftSkills()
++removeTalents()
++removeGifts()
++removeEvals()
++writeNotes()
+------------------------------------------
+
+
+
+-------Manager-------
+*User
+	//securityClearance: Medium
++employees: ArrayList<Employee>
+
+
+	+returnData(Employee)
++editTags(Employee) 
++editData(Employee)
+------------------------------------------
+
+
+
+
+-------Admin-------
+*Manager
+	//securityClearance: High
+
+
+	+returnData(Manager)
++editTags(Manager) 
++editData(Manager)
+	Helper
+//Used to store helpful methods 
+	
+
+	+sortSearch(tag t)
++writeToFile()
++readFile()
+------------------------------------------
+
+
+
+-------Job-------
+//Used as a template for job history
+	+companyName: String
++companyTitle: String
++timeWorked: String
++skillsLearned:
+  ArrayList<Skill>
+	+getCompanyName()
++getCompanyTitle()
++getTimeWorked()
++getSkillsLearned()
++setCompanyName()
++setCompanyTitle()
++setTimeWorked()
++addSkill()
++removeSkill()
+------------------------------------------
+
+
+
+-------Skill-------
+//Holds info on each skill
+	+proficiency: enum
++skillName: String
+	+setProficiency(enum n)
++getProficiency()
+	Evaluations
+//basic template for management evaluation
+	+evaluator: String
++date: String
++mentalState: String
++notes: String //written to file using BufferedWriter
+	+getEvaluator()
++getEvalDate()
++getMentalState()
++getNotes() //returns link to
+  notes rather than string
++setEvaluator()
++setDate()
++setMentalState()
++writeNotes()
+------------------------------------------
+
+
+
+-------Task-------
+// what job tasks were performed for the list of job tasks performed
+	+taskName: String
++date: String
+	+getTaskName()
++getDate()
++setTaskName()
++setDate()
+------------------------------------------
+
+
+
+-------GUI-------
+
+
+	+
+------------------------------------------
+
+	
+
+If you guys can think of any abstraction or way to make things inherit more instead plz help
