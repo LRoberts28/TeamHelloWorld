@@ -1,7 +1,9 @@
 package StartupGame020324;
+
 import java.util.ArrayList;
+
 public class StartupGame {
-    public static void main(String[] args) {        //main method for the startup game
+    public static void main(String[] args) { // main method for the startup game
         int numOfGuesses = 0;
         GameHelper helper = new GameHelper();
 
@@ -15,7 +17,8 @@ public class StartupGame {
         theStartup.setLocationCells(locations);
         boolean isAlive = true;
 
-        while (isAlive) {       //runs what actually is shown to the player. It has the astetic stuff and the ending statement. 
+        while (isAlive) { // runs what actually is shown to the player. It has the asthetic stuff and the
+                          // ending statement.
             int guess = helper.getUserInput("enter a number");
             String result = theStartup.checkYourself(guess);
             System.out.println(result);
@@ -24,7 +27,7 @@ public class StartupGame {
                 isAlive = false;
                 System.out.println("You took " + numOfGuesses + " guesses");
             } // close if
-        }  // close while
+        } // close while
         helper.closeScanner();
     }
 }
