@@ -1,4 +1,4 @@
-package StartupGame020324.Assignment;
+package HrApp;
 
 public class Job {
     //attributes
@@ -7,6 +7,14 @@ public class Job {
     
         //Stores the number of months in the job
         int experience;
+    
+    //constructor
+        public Job(String title, int xp)
+        {
+            this.title = title;
+            experience = xp;
+        }
+
     
     //methods
         //Sets the job title

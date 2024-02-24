@@ -1,36 +1,50 @@
 package HrApp;
 
+//HardSkill:
 public class HardSkill {
-    //HardSkill:
-    //Attributes:
-     //- title (String): Stores the title of the hardSkill (C#, OOP, Java, SQL, TeamLead, TechnicalWriting ect)
-     //- level (String): Stores the skill level of the hardskill (Beginner, Intermediate, Advanced, Expert)
-   //- Methods:
-     //- setTitle(String): Sets the title of the hardskill.
-     //- setLevel(String): Sets the level of skill
-     //- getTitle(): Retrieves the title of the hardSkill.
-     //- getLevel(): Retrieves the level of the hardSkill.
-     //- displayDetails(): Displays the title and skillLevel of each hardSkill
 
+//Attributes:
+     //title (String): Stores the title of the hardSkill (C#, OOP, Java, SQL, TeamLead, TechnicalWriting ect)
      private String title;
+
+     //- level (String): Stores the skill level of the hardskill (Beginner, Intermediate, Advanced, Expert)
      private String level;
+
+//Constructor:
+     public HardSkill(String t, String l)
+     {
+        title = t;
+        level = l;
+
+     }
+
+//Methods:
+     //getTitle(): Retrieves the title of the hardSkill.
      public String getTitle(){
         return title;
      }
-    public String getLevel(){
-        return level;
-    }
+
+    //setTitle(String): Sets the title of the hardskill.
     public void setTitle(String set)
     {
         title = set;
     }
+
+    //getLevel(): Retrieves the level of the hardSkill.
+    public String getLevel(){
+        return level;
+    }
+
+    //setLevel(String): Sets the level of skill
     public void setLevel(String set)
     {
         level = set;
     }
+
+    //displayDetails(): Displays the title and skillLevel of each 
     public void displayDetails()
     {
-        System.out.println("Title: " + title + " Level: " + level);
+        System.out.println("--- Hard Skills ---\r\n" + "Title: " + getTitle() + "\r\n" + "Level: " + getLevel());
     }
     
 }
