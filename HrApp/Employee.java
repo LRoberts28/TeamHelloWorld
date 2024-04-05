@@ -14,11 +14,11 @@ public class Employee extends Person {
     private int tasksPerformed;
 
     // default constructor for Employee
-    public Employee(){
+    public Employee() {
     }
 
     // employee constructor
-    public Employee(String name, int age, String email, String password, String address,
+    public Employee(String name, short age, String email, String password, String address,
             String phone, String currJob, int tasksPerformed) {
         this.address = address;
         this.phone = phone;
@@ -47,8 +47,8 @@ public class Employee extends Person {
         this.tasksPerformed = tasksPerformed;
     }
 
-    // method to set the SecurityClearance level of an employee 
-    public void setSecurityClearance(SecurityClearance clearance){
+    // method to set the SecurityClearance level of an employee
+    public void setSecurityClearance(SecurityClearance clearance) {
         this.clearance = clearance;
     }
 
@@ -83,7 +83,7 @@ public class Employee extends Person {
             writer.write(note); // Write the note to the file
             // outputs if the note was written to file correctly
             System.out.println("Note has been successfully written to file: " + filePath);
-        } catch (IOException e) { // catches exception 
+        } catch (IOException e) { // catches exception
             System.err.println("Error writing note to file: " + e.getMessage());
             e.printStackTrace(); // prints the stack trace of an exception to the standard error stream
         }
@@ -94,10 +94,11 @@ public class Employee extends Person {
         Scanner scanner = new Scanner(System.in); // opens the scanner
         System.out.println("Enter your note:");
         String note = scanner.nextLine(); // reads info
+        scanner.close();
         return note; // returns the note with info
     }
 
-    public static String saveFile(){
+    public static String saveFile() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Save as:");
         String noteName = scanner.nextLine();
@@ -112,7 +113,8 @@ public class Employee extends Person {
 
             // Check if the file exists
             if (file.exists()) {
-                // Open the file using the default system application associated with its file type
+                // Open the file using the default system application associated with its file
+                // type
                 Desktop.getDesktop().open(file);
                 System.out.println("File opened successfully.");
             } else {
@@ -123,33 +125,33 @@ public class Employee extends Person {
             e.printStackTrace();
         }
     }
-
-    //example usage for note writer
-
-    public static void main(String[] args) {
-        // Get note from user input
-        String note = getNoteFromUser();
-        String filePath = saveFile();
-
-        //String filePath = "note.txt";
-
-        writeNoteToFile(note, filePath);
-    }
-
+    /*
+     * // example usage for note writer
+     * 
+     * public static void main(String[] args) {
+     * // Get note from user input
+     * String note = getNoteFromUser();
+     * String filePath = saveFile();
+     * 
+     * // String filePath = "note.txt";
+     * 
+     * writeNoteToFile(note, filePath);
+     * }
+     */
 }
 
 /*
  * Employee inherits from Person
- * securityClearance: Low //----------------------------------------------------------- done
- * +address: String //----------------------------------------------------------- done
- * +phone: String //-----------------------------------------------------------done
- * +age: short //-----------------------------------------------------------
+ * securityClearance: Low //----------------------------- done
+ * +address: String //----------------------------- done
+ * +phone: String //----------------------------- done
+ * +age: short //----------------------------- done
  * person class already has this
- * +currentJob: Job //----------------------------------------------------------- done
- * +resume: .pdf file //uploaded pdf file, cannot be changed in program 
- * +notes: String //written to embedded file using BufferedWriter //----------------------------------------------------------- done
+ * +currentJob: Job //----------------------------- done
+ * +resume: .pdf file //uploaded pdf file, cannot be changed in program
+ * +notes: String //----------------------------- done
  * +jobHistory: ArrayList<Job>
- * +tasksPreformed: int //----------------------------------------------------------- done
+ * +tasksPreformed: int //----------------------------- done
  * +softSkills:ArrayList<Skill>
  * +talents:ArrayList<String>
  * +gifts:ArrayList<String>
@@ -161,22 +163,22 @@ public class Employee extends Person {
  * +addGift()
  * +addEval()
  * +getChangeLog()
- * +getAddress() //-----------------------------------------------------------done
- * +getPhone() //-----------------------------------------------------------done
- * +getAge() //----------------------------------------------------------- done
- * +getJob() //----------------------------------------------------------- done
+ * +getAddress()//----------------------------- done
+ * +getPhone() //----------------------------- done
+ * +getAge() //----------------------------- done
+ * +getJob() //----------------------------- done
  * +getJobHistory()
- * +getTasksPreformed() //----------------------------------------------------------- done
+ * +getTasksPreformed()//------------------- done
  * +getSoftSkills()
  * +getTalents()
  * +getGifts()
  * +getEvals()
- * +setAge() //----------------------------------------------------------- done
- * +setAddress() //-----------------------------------------------------------done
- * +setPhone() //-----------------------------------------------------------done
- * +setAge() //----------------------------------------------------------- done
- * +setCurrentJob() //-----------------------------------------------------------done
- * +setTasksPreformed()//----------------------------------------------------------- done
+ * +setAge() //----------------------------- done
+ * +setAddress()//----------------------------- done
+ * +setPhone() //----------------------------- done
+ * +setAge() //----------------------------- done
+ * +setCurrentJob()//----------------------------- done
+ * +setTasksPreformed()//----------------------------- done
  * +readNotes()
  * +removeJobHistory()
  * +removeSoftSkills()
