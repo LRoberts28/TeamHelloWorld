@@ -1,4 +1,5 @@
 package HrApp;
+
 import java.util.ArrayList;
 
 public class Job 
@@ -23,3 +24,4 @@ public class Job
         return timeWorked;
     }
 }
+
