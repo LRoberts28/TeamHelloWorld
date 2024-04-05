@@ -8,7 +8,7 @@ public class Person { // class diagram says User.java but i didn't want to break
     protected SecurityClearance clearance;
 
     // default constructor for Person
-    public Person(){
+    public Person() {
     }
 
     public Person(String name, int age, String email, String password) {
@@ -67,6 +67,10 @@ public class Person { // class diagram says User.java but i didn't want to break
     // method to get persons age
     public int getAge() {
         return age;
+    }
+
+    public String toString() {
+        return name + " " + age + " " + email + " " + password;
     }
 
     public void displayDetails() {
