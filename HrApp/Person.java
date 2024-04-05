@@ -5,14 +5,18 @@ public class Person { // class diagram says User.java but i didn't want to break
     private int age;
     private String email;
     private String password;
-    private SecurityClearance clearance;
+    protected SecurityClearance clearance;
 
-    public Person(String name, int age, String email, String password, SecurityClearance clearance) {
+    // default constructor for Person
+    public Person(){
+    }
+
+    public Person(String name, int age, String email, String password) {
         this.name = name;
         this.age = age;
         this.email = email;
         this.password = password;
-        this.clearance = clearance;
+        clearance = SecurityClearance.LOW;
     }
 
     // method to set persons email
@@ -66,7 +70,7 @@ public class Person { // class diagram says User.java but i didn't want to break
     }
 
     public void displayDetails() {
-        System.out.println("--- Person Details ---\r\n" + "Name: " + name + "\r\n" + "Age: " + age);
+        System.out.println("--- Person Details ---\n" + "Name: " + name + "\n" + "Age: " + age);
     }
 }
 
