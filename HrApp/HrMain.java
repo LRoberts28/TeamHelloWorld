@@ -3,11 +3,7 @@ package HrApp;
 public class HrMain {
     public static void main(String[] args) {
         // Creates and Instantiates person, job, and hardSkill
-        Person person = new Person("John Doe", 25, "johnDoe@gmail.com", "password1234", SecurityClearance.MEDIUM); // added
-                                                                                                                   // email,
-                                                                                                                   // password,
-                                                                                                                   // and
-                                                                                                                   // SecurityClearance
+        Person person = new Person("John Doe", 25, "johnDoe@gmail.com", "password1234"); // added email password
         Job job = new Job("Chief Engineer", 62);
         HardSkill hardSkill = new HardSkill("Coding in Python", "Expert");
         System.out.println(person.getClearance()); // added by Lance
