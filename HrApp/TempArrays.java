@@ -8,7 +8,7 @@ public class TempArrays {
        
         for(int i = 0; i < allUsers.size(); i++)    //Determines where to put the user compared to the list, sorts the list
         {
-            if(allUsers.get(i).getEmail().compareTo(newUser.getEmail()) >= 0)
+            if(allUsers.get(i).getName().compareTo(newUser.getName()) >= 0)
             {
                 break;
             }
@@ -46,11 +46,14 @@ public class TempArrays {
     public static void main(String[] args)
     {
         System.out.println(getAllUsers());
-        Person alex = new Person("Alex", 20, "arhea2@murraystate.edu", "adojsnfonwon", SecurityClearance.LOW);
+        Person alex = new Person("Alex", 20, "arhea2@murraystate.edu", "adojsnfonwon");
         addUser(alex);
         System.out.println(getAllUsers());
-        Person johnDoe = new Person("John", 20, "jDoe@murraystate.edu", "jnijewbff", SecurityClearance.LOW);
+        Person johnDoe = new Person("John", 20, "jdoe@murraystate.edu", "jnijewbff");
         addUser(johnDoe);
+        System.out.println(getAllUsers());
+        Person asher = new Person("Asher", 20, "ameyers@murraystate.edu", "jnijewbff");
+        addUser(asher);
         System.out.println(getAllUsers());
     }
     
