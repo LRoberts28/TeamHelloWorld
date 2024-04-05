@@ -70,7 +70,7 @@ public class Person { // class diagram says User.java but i didn't want to break
     }
 
     public String toString() {
-        return name + " " + age + " " + email + " " + password;
+        return name + " " + age + " " + email;
     }
 
     public void displayDetails() {
