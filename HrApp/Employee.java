@@ -6,12 +6,18 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Employee extends Person {
     private String address;
     private String phone;
     private String currJob;
     private int tasksPerformed;
+    private ArrayList<String> jobHistory;
+    private ArrayList<String> softSkills;
+    private ArrayList<String> talents;
+    private ArrayList<String> gifts;
+    private ArrayList<String> evals;
 
     // default constructor for Employee
     public Employee() {
@@ -25,6 +31,11 @@ public class Employee extends Person {
         this.currJob = currJob;
         this.tasksPerformed = tasksPerformed;
         clearance = SecurityClearance.LOW;
+        this.jobHistory = new ArrayList<>();
+        this.softSkills = new ArrayList<>();
+        this.talents = new ArrayList<>();
+        this.gifts = new ArrayList<>();
+        this.evals = new ArrayList<>();
     }
 
     // method to set employees address
@@ -94,7 +105,7 @@ public class Employee extends Person {
         Scanner scanner = new Scanner(System.in); // opens the scanner
         System.out.println("Enter your note:");
         String note = scanner.nextLine(); // reads info
-        scanner.close();
+        // scanner.close();
         return note; // returns the note with info
     }
 
@@ -125,19 +136,115 @@ public class Employee extends Person {
             e.printStackTrace();
         }
     }
+
+    // example usage for note writer
     /*
-     * // example usage for note writer
-     * 
      * public static void main(String[] args) {
      * // Get note from user input
+     * Employee employee = new Employee();
+     * employee.addSoftSkill("Communication");
+     * employee.addSoftSkill("Teamwork");
+     * employee.removeFromSoftSkills(employee.getSoftSkills(), "Communication");
+     * System.out.println("Soft Skills after removal:");
+     * for (String softSkill : employee.getSoftSkills()) {
+     * System.out.println(softSkill);
+     * }
      * String note = getNoteFromUser();
      * String filePath = saveFile();
      * 
      * // String filePath = "note.txt";
      * 
      * writeNoteToFile(note, filePath);
+     * readNote(filePath);
      * }
      */
+
+    public static boolean searchHardSkill(ArrayList<String> hardSkills, String searchedSkill) {
+        // Iterate through the ArrayList to check if the skill searched exists
+        for (String skill : hardSkills) {
+            if (skill.equalsIgnoreCase(searchedSkill)) {
+                return true; // if skill is found returns true
+            }
+        }
+        // if skill not found return false
+        return false;
+
+    }
+
+    // method that removes a string from job History
+    public void removeFromJobHistory(ArrayList<String> jobHistory, String itemToRemove) {
+        jobHistory.removeIf(item -> item.equals(itemToRemove));
+    }
+
+    // method that removes a string from soft Skills
+    public void removeFromSoftSkills(ArrayList<String> softSkills, String itemToRemove) {
+        softSkills.removeIf(item -> item.equals(itemToRemove));
+    }
+
+    // method that removes a string from talents
+    public void removeFromTalents(ArrayList<String> talents, String itemToRemove) {
+        talents.removeIf(item -> item.equals(itemToRemove));
+    }
+
+    // method that removes a string from gifts
+    public void removeFromGifts(ArrayList<String> gifts, String itemToRemove) {
+        gifts.removeIf(item -> item.equals(itemToRemove));
+    }
+
+    // method that removes a string from evals
+    public void removeFromEvals(ArrayList<String> evals, String itemToRemove) {
+        evals.removeIf(item -> item.equals(itemToRemove));
+    }
+
+    // method to add job history
+    public void addJobHistory(String job) {
+        jobHistory.add(job);
+    }
+
+    // method to add soft skills
+    public void addSoftSkill(String softSkill) {
+        softSkills.add(softSkill);
+    }
+
+    // method to add talents
+    public void addTalent(String talent) {
+        talents.add(talent);
+    }
+
+    // method to add gifts
+    public void addGift(String gift) {
+        gifts.add(gift);
+    }
+
+    // method to add evaluations
+    public void addEval(String evaluation) {
+        evals.add(evaluation);
+    }
+
+    // getter methods for job history
+    public ArrayList<String> getJobHistory() {
+        return jobHistory;
+    }
+
+    // getter method for soft skills
+    public ArrayList<String> getSoftSkills() {
+        return softSkills;
+    }
+
+    // getter method for talents
+    public ArrayList<String> getTalents() {
+        return talents;
+    }
+
+    // getter method for gifts
+    public ArrayList<String> getGifts() {
+        return gifts;
+    }
+
+    // getter method for evals
+    public ArrayList<String> getEvaluations() {
+        return evals;
+    }
 }
 
 /*
@@ -146,44 +253,45 @@ public class Employee extends Person {
  * +address: String //----------------------------- done
  * +phone: String //----------------------------- done
  * +age: short //----------------------------- done
- * person class already has this
+ * person class already has this ^^
  * +currentJob: Job //----------------------------- done
  * +resume: .pdf file //uploaded pdf file, cannot be changed in program
  * +notes: String //----------------------------- done
- * +jobHistory: ArrayList<Job>
+ * +jobHistory: ArrayList<Job> //----------------------------- done
  * +tasksPreformed: int //----------------------------- done
- * +softSkills:ArrayList<Skill>
- * +talents:ArrayList<String>
- * +gifts:ArrayList<String>
- * +evals: ArrayList<Evaluations>
+ * +softSkills:ArrayList<Skill> //----------------------------- done
+ * +talents:ArrayList<String> //----------------------------- done
+ * +gifts:ArrayList<String> //----------------------------- done
+ * +evals: ArrayList<Evaluations> //----------------------------- done
  * 
- * +addJobHistory()
- * +addSoftSkill()
- * +addTalent()
- * +addGift()
- * +addEval()
- * +getChangeLog()
+ * +addJobHistory() //----------------------------- done
+ * +addSoftSkill() //----------------------------- done
+ * +addTalent() //----------------------------- done
+ * +addGift() //----------------------------- done
+ * +addEval() //----------------------------- done
+ * +getChangeLog() // not possible without writing all the information
+ * to a seperate file and comparing each string
  * +getAddress()//----------------------------- done
  * +getPhone() //----------------------------- done
  * +getAge() //----------------------------- done
  * +getJob() //----------------------------- done
- * +getJobHistory()
+ * +getJobHistory() //----------------------------- done
  * +getTasksPreformed()//------------------- done
- * +getSoftSkills()
- * +getTalents()
- * +getGifts()
- * +getEvals()
+ * +getSoftSkills() //----------------------------- done
+ * +getTalents() //----------------------------- done
+ * +getGifts() //----------------------------- done
+ * +getEvals() //----------------------------- done
  * +setAge() //----------------------------- done
  * +setAddress()//----------------------------- done
  * +setPhone() //----------------------------- done
  * +setAge() //----------------------------- done
  * +setCurrentJob()//----------------------------- done
  * +setTasksPreformed()//----------------------------- done
- * +readNotes()
- * +removeJobHistory()
- * +removeSoftSkills()
- * +removeTalents()
- * +removeGifts()
- * +removeEvals()
- * +writeNotes()
+ * +readNotes() //----------------------------- done
+ * +removeJobHistory() //----------------------------- done
+ * +removeSoftSkills() //----------------------------- done
+ * +removeTalents() //----------------------------- done
+ * +removeGifts() //----------------------------- done
+ * +removeEvals() //----------------------------- done
+ * +writeNotes() //----------------------------- done
  */

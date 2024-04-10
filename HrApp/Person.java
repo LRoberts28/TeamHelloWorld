@@ -11,6 +11,7 @@ public class Person { // class diagram says User.java but i didn't want to break
     public Person() {
     }
 
+    // person constructor
     public Person(String name, int age, String email, String password) {
         this.name = name;
         this.age = age;
@@ -70,7 +71,7 @@ public class Person { // class diagram says User.java but i didn't want to break
     }
 
     public String toString() {
-        return name + " " + age + " " + email + " " + password;
+        return name + " " + age + " " + email;
     }
 
     public void displayDetails() {
@@ -79,6 +80,7 @@ public class Person { // class diagram says User.java but i didn't want to break
 }
 
 /*
+ * To Add below
  * User
  * +email: String------------------------------------ // done
  * +password: String------------------------------------ // done
