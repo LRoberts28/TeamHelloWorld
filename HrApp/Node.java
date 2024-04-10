@@ -1,28 +1,27 @@
 package HrApp;
-import javax.swing.*;
 
-public class NodeGUI {
-    private JFrame previousFrame;
-    private JFrame nextFrame;
-    public NodeGUI()
+public class Node<T> {
+    private T item;
+    private Node<T> next;
+    public Node(T item)
     {
-        previousFrame = null;
-        nextFrame = null;
+        item = this.item;
+        next = null;
     }
-    public JFrame getPrevious()
+    public T getItem()
     {
-        return previousFrame;
+        return item;
     }
-    public JFrame getNext()
+    public Node<T> getNext()
     {
-        return nextFrame;
+        return next;
     }
-    public void setPrevious(JFrame previous)
+    public void setItem(T item)
     {
-        previousFrame = previous;
+        item = this.item;
     }
-    public void setNext(JFrame next)
+    public void setNext(Node<T> next)
     {
-        nextFrame = next;
+        next = this.next;
     }
 }
