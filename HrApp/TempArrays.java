@@ -2,7 +2,6 @@ package HrApp;
 import java.util.ArrayList;
 public class TempArrays {
     private static ArrayList<Person> allUsers = new ArrayList<Person>(); 
-    
     public static void addUser(Person newUser) //replace object with user
     {
         int index = 0;
@@ -69,6 +68,5 @@ public class TempArrays {
         }
         return results;
     }
-    
     
 }
