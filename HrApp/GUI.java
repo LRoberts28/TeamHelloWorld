@@ -1,5 +1,6 @@
 package HrApp;
 import java.util.ArrayList;
+import javax.swing.*;
 public class GUI 
 {
     private ArrayList<Person> allUsers;
@@ -32,4 +33,5 @@ public class GUI
         }
         return results;
     }
+
 }
