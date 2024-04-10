@@ -3,35 +3,17 @@ import java.util.ArrayList;
 import javax.swing.*;
 public class GUI 
 {
-    private ArrayList<Person> allUsers;
-    public GUI()
+    private JFrame mainPage;
+    public GUI()                //SwingUtilities.invokeLater(new Runnable(){@overide public void run(){}})
     {
-        allUsers = TempArrays.getAllUsers();
+        mainPage = new JFrame("Temporary Title");
+        
     }
-    public ArrayList<Person> findBy(SecurityClearance security)
+    public void initialize()
     {
-        ArrayList<Person> results = new ArrayList<Person>();
-        for(int i = 0; i < allUsers.size(); i++)
-        {
-            if(allUsers.get(i).getClearance().equals(security))
-            {
-                results.add(allUsers.get(i));
-            }
-        }
-        return results;
+        
+    }
 
-    }
-    public ArrayList<Person> findBy(String email)
-    {
-        ArrayList<Person> results = new ArrayList<Person>();
-        for(int i = 0; i < allUsers.size(); i++)
-        {
-            if(allUsers.get(i).getEmail().compareToIgnoreCase(email) == 0)
-            {
-                results.add(allUsers.get(i));
-            }
-        }
-        return results;
-    }
+    
 
 }

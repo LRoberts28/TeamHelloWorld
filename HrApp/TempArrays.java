@@ -2,6 +2,7 @@ package HrApp;
 import java.util.ArrayList;
 public class TempArrays {
     private static ArrayList<Person> allUsers = new ArrayList<Person>(); 
+    
     public static void addUser(Person newUser) //replace object with user
     {
         int index = 0;
@@ -43,18 +44,31 @@ public class TempArrays {
     {
         return allUsers;
     }
-    public static void main(String[] args)
+    public ArrayList<Person> findBy(SecurityClearance security)
     {
-        System.out.println(getAllUsers());
-        Person alex = new Person("Alex", 20, "arhea2@murraystate.edu", "adojsnfonwon");
-        addUser(alex);
-        System.out.println(getAllUsers());
-        Person johnDoe = new Person("John", 20, "jdoe@murraystate.edu", "jnijewbff");
-        addUser(johnDoe);
-        System.out.println(getAllUsers());
-        Person asher = new Person("Asher", 20, "ameyers@murraystate.edu", "jnijewbff");
-        addUser(asher);
-        System.out.println(getAllUsers());
+        ArrayList<Person> results = new ArrayList<Person>();
+        for(int i = 0; i < allUsers.size(); i++)
+        {
+            if(allUsers.get(i).getClearance().equals(security))
+            {
+                results.add(allUsers.get(i));
+            }
+        }
+        return results;
+
     }
+    public ArrayList<Person> findBy(String email)
+    {
+        ArrayList<Person> results = new ArrayList<Person>();
+        for(int i = 0; i < allUsers.size(); i++)
+        {
+            if(allUsers.get(i).getEmail().compareToIgnoreCase(email) == 0)
+            {
+                results.add(allUsers.get(i));
+            }
+        }
+        return results;
+    }
+    
     
 }
