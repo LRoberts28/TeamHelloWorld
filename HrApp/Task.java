@@ -4,6 +4,12 @@ public class Task {
     String taskName;
     String date;
 
+    public Task(String taskName, String date)
+    {
+        this.taskName = taskName;
+        this.date = date;
+    }
+
     public String getTaskName()
     {
         return taskName;
