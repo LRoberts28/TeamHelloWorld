@@ -1,7 +1,7 @@
 package HrApp;
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.concurrent.Flow;
+import java.util.concurrent.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -10,6 +10,7 @@ public class GUI
     private JFrame frame;
     private JPanel background;
     private Container mainMenu;
+    private Container defaultContainer;
 
     //Arraylists of Containers to contain content panes to save each page
 
@@ -22,6 +23,7 @@ public class GUI
     {
         frame = new JFrame("Main Page");
         initiallize();
+        defaultContainer = frame.getContentPane();
         mainMenu = mainPage();
         setPage(mainMenu);
         
@@ -48,10 +50,10 @@ public class GUI
         j.setBackground(Color.GRAY);
 
         JButton back = new JButton("<-");
-        back.addActionListener(e -> System.out.println("going back"));
+        back.addActionListener(e -> frame.setContentPane(defaultContainer));
 
         JButton forward = new JButton("->");
-        forward.addActionListener(e -> System.out.println("going forward"));
+        forward.addActionListener(e -> frame.setContentPane(mainMenu));
         j.add(back);
         j.add(forward);
         frame.add(j, BorderLayout.NORTH);
