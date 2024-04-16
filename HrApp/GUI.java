@@ -1,13 +1,18 @@
 package HrApp;
 import javax.swing.*;
 import java.util.ArrayList;
-import java.awt.Dimension;
+import java.util.concurrent.Flow;
+import java.awt.*;
 import java.awt.event.*;
 
 public class GUI 
 {
-    private JButton button;
-    private JFrame mainPage;
+    private JFrame frame;
+    private JPanel background;
+    private Container mainMenu;
+
+    //Arraylists of Containers to contain content panes to save each page
+
     public static void main(String[] args)
     {
         GUI gui = new GUI();
@@ -15,40 +20,58 @@ public class GUI
     }
     public GUI()
     {
-        mainPage = new JFrame("Main Page");
-        buttonTest();
-        setUp();
+        frame = new JFrame("Main Page");
+        initiallize();
+        mainMenu = mainPage();
+        setPage(mainMenu);
         
     }
-    public void buttonTest()    //testing for resizing a button
+    private void setPage(Container newPage)
     {
-        button = new JButton("D");
-        button.setSize(10,10);
-        button.addActionListener(new actionBack());
-        mainPage.getContentPane().add(button);
-        
+        frame.setContentPane(newPage);
+    }
+    private Container mainPage()
+    {
+        taskBar();
+        background = new JPanel();
+        background.setLayout(new FlowLayout(FlowLayout.CENTER));
+        background.setBackground(Color.DARK_GRAY);
+        frame.add(background, BorderLayout.CENTER);
+        TextField search = new TextField("Start your search here!");
 
+        background.add(search, BorderLayout.CENTER);
+        return frame.getContentPane();
     }
-    public void setUp() //sets up the jframe for all of the tests
+    private void taskBar()
     {
-        mainPage.setSize(1000, 1000);
-        mainPage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        mainPage.setVisible(true);
+        JPanel j = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        j.setBackground(Color.GRAY);
+
+        JButton back = new JButton("<-");
+        back.addActionListener(e -> System.out.println("going back"));
+
+        JButton forward = new JButton("->");
+        forward.addActionListener(e -> System.out.println("going forward"));
+        j.add(back);
+        j.add(forward);
+        frame.add(j, BorderLayout.NORTH);
+
+
+        //you can edit the panel after it has been added!!!
+    }
+    public void initiallize() //sets up the jframe for all of the tests
+    {
+        
+        frame.setSize(1000, 1000);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
     public JFrame getJFrame()
     {
-        return mainPage;
+        return frame;
     }
     
-}
-class actionBack implements ActionListener
-{
-    public void actionPerformed(ActionEvent event)
-    {
-        //go back to previous page
-        //test code, delete later
-        System.out.println("Success");
-    }
 }
 
 
