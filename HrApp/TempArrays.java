@@ -2,6 +2,7 @@ package HrApp;
 import java.util.ArrayList;
 public class TempArrays {
     private static ArrayList<Person> allUsers = new ArrayList<Person>(); 
+
     public static void addUser(Person newUser) //replace object with user
     {
         int index = 0;
@@ -17,7 +18,6 @@ public class TempArrays {
         allUsers.add(index, newUser);
 
     }
-    //implement removeUser(String email), getUser(String email),  
     public static void removeUser(String email)
     {
         
@@ -43,7 +43,7 @@ public class TempArrays {
     {
         return allUsers;
     }
-    public ArrayList<Person> findBy(SecurityClearance security)
+    public static ArrayList<Person> searchBy(SecurityClearance security) //returns everyone who has that level of security clearance
     {
         ArrayList<Person> results = new ArrayList<Person>();
         for(int i = 0; i < allUsers.size(); i++)
@@ -56,7 +56,7 @@ public class TempArrays {
         return results;
 
     }
-    public ArrayList<Person> findBy(String email)
+    public static ArrayList<Person> searchBy(String email) //returns everyone who has this email, which should always be one person, but this list will be used for search results
     {
         ArrayList<Person> results = new ArrayList<Person>();
         for(int i = 0; i < allUsers.size(); i++)
