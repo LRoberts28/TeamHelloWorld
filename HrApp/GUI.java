@@ -1,18 +1,17 @@
 package HrApp;
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.concurrent.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.util.ArrayList;
 
 public class GUI 
 {
     private JFrame frame;
     private JPanel background;
     private Container mainMenu;
-    private Container defaultContainer;
 
     //Arraylists of Containers to contain content panes to save each page
+    ArrayList<Container> pages = new ArrayList<Container>();
+    int currentIndex = 0;
 
     public static void main(String[] args)
     {
@@ -23,14 +22,22 @@ public class GUI
     {
         frame = new JFrame("Main Page");
         initiallize();
-        defaultContainer = frame.getContentPane();
+        JFrame j = new JFrame("Main Page");
+        setPage(j.getContentPane());
         mainMenu = mainPage();
         setPage(mainMenu);
         
+        
+    }
+    public void addToPages(Container newPage)
+    {
+        pages.add(newPage);
+        currentIndex++;
     }
     private void setPage(Container newPage)
     {
         frame.setContentPane(newPage);
+        addToPages(newPage);
     }
     private Container mainPage()
     {
@@ -50,10 +57,10 @@ public class GUI
         j.setBackground(Color.GRAY);
 
         JButton back = new JButton("<-");
-        back.addActionListener(e -> frame.setContentPane(defaultContainer));
+        back.addActionListener(e -> setPage(pages.get(currentIndex - 1)));
 
         JButton forward = new JButton("->");
-        forward.addActionListener(e -> frame.setContentPane(mainMenu));
+        forward.addActionListener(e -> setPage(pages.get(currentIndex + 1)));
         j.add(back);
         j.add(forward);
         frame.add(j, BorderLayout.NORTH);
@@ -73,7 +80,7 @@ public class GUI
     {
         return frame;
     }
-    
+
     
 }
 
