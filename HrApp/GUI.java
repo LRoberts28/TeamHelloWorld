@@ -11,106 +11,71 @@ public class GUI
     private JFrame frame;
     private JPanel background;
     private Container mainMenu;
+    private ArrayList<Container> pages = new ArrayList<Container>();
 
-    //Arraylists of Containers to contain content panes to save each page
-    ArrayList<Container> pages = new ArrayList<Container>();
-    int currentIndex = 0;
-
-    public static void main(String[] args)
-    {
-        GUI gui = new GUI();
-
-    }
     public GUI()
     {
         frame = new JFrame("Main Page");
-        initiallize();
-        loginPage();
+        mainPage();
     }
-    public void addToPages(Container newPage)
-    {
-        pages.add(newPage);
-        currentIndex++;
-    }
-    private void setPage(Container newPage)
-    {
-        frame.setContentPane(newPage);
-        addToPages(newPage);
-    }
+
 
     //creates the main page as a content pane and returns it
     private Container mainPage()
     {
         taskBar();
-        background = new JPanel();
-        background.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        background = new JPanel(new FlowLayout(FlowLayout.CENTER));
         background.setBackground(Color.DARK_GRAY);
         frame.add(background, BorderLayout.CENTER);
+
         TextField search = new TextField("Start your search here!");
-        search.addKeyListener(new KeyListener(){
-            private String returned = "";
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == e.VK_ENTER)
-                {
-                    System.out.println(returned);
-                }
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-            @Override
-            public void keyTyped(KeyEvent e) {
-                returned += e.getKeyChar();
-            }
-        });
+
+        //Add keylistener to textfield to log what is typed and when enter is pressed, call search function
 
         background.add(search, BorderLayout.CENTER);
+
         return frame.getContentPane();
     }
 
-    private Container loginPage()
+    //searches for the name in the 
+    private void search(String name)
     {
-        background = new JPanel();
-        TextField username = new TextField("Username");
-        username.addKeyListener(new KeyListener() {
-            private String returned = "";
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == e.VK_ENTER)
-                {
-                    System.out.println(returned);
-                }
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-            @Override
-            public void keyTyped(KeyEvent e) {
-                returned += e.getKeyChar();
-            }
-        });
-        frame.add(username);
-
-        return background;
 
     }
+
+    //creates the login page as a content pane and returns it, currently returns void due to method being incomplete, replace with Container to complete
+    private void loginPage()
+    {
+        //form login page background using the background JPanel
+
+        //add textfield for Username and jpasswordfield for Password
+
+        //in the two textfields, when enter is pressed, call the login method
+
+    }
+
     private void taskBar()
     {
-        JPanel j = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        j.setBackground(Color.GRAY);
+        background = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        background.setBackground(Color.GRAY);
 
         JButton back = new JButton("<-");
-        back.addActionListener(e -> setPage(pages.get(currentIndex - 1)));
+        back.addActionListener(e -> System.out.println("Back"));    //replace with code to go back a page
+        background.add(back);
 
         JButton forward = new JButton("->");
-        forward.addActionListener(e -> setPage(pages.get(currentIndex + 1)));
-        j.add(back);
-        j.add(forward);
-        frame.add(j, BorderLayout.NORTH);
+        forward.addActionListener(e -> System.out.println("Forward"));      //replace with code to go forward a page
+        background.add(forward);
 
+        frame.add(background, BorderLayout.NORTH);
 
-        //you can edit the panel after it has been added!!!
+        //NOTE: you can edit the panel after it has been added!!!
     }
-    public void initiallize() //sets up the jframe for all of the tests
+
+
+    
+    public void initiallize() //sets up the jframe 
     {
         
         frame.setSize(1000, 1000);
@@ -123,7 +88,15 @@ public class GUI
         return frame;
     }
 
-    
+    public void addToPages(Container newPage)
+    {
+        pages.add(newPage);
+    }
+    private void setPage(Container newPage)
+    {
+        frame.setContentPane(newPage);
+        addToPages(newPage);
+    }
 }
 
 

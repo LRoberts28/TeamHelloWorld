@@ -1,0 +1,10 @@
+Todo List
+1. Search 
+    a. Search Function
+    b. Search Page
+2. Login
+    a. Login Function
+    b. Login Page
+3. Main Page
+4. Main method needs to be fleshed out
+5. Profile Pages
