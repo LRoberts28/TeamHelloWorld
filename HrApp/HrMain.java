@@ -6,8 +6,6 @@ public class HrMain {
         SetUp();
         GUI gui = new GUI();
 
-        gui.initiallize();
-
     }
     public static void SetUp()
     {

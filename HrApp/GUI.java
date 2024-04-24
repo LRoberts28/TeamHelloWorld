@@ -11,18 +11,20 @@ public class GUI
     private JFrame frame;
     private JPanel background;
     private Container mainMenu;
-    private ArrayList<Container> pages = new ArrayList<Container>();
+    private ArrayList<JFrame> pages = new ArrayList<JFrame>();
+    private int currentIndex = 0;
 
     public GUI()
     {
-        frame = new JFrame("Main Page");
-        mainPage();
+        frame = mainPage();
+        initiallize();
     }
 
 
     //creates the main page as a content pane and returns it
-    private Container mainPage()
+    private JFrame mainPage()
     {
+        frame = new JFrame("main");
         taskBar();
 
         background = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -35,37 +37,45 @@ public class GUI
 
         background.add(search, BorderLayout.CENTER);
 
-        return frame.getContentPane();
+        return frame;
     }
 
-    //searches for the name in the 
+    //searches for any person who has that name
     private void search(String name)
     {
+        //loops through all of the people in the TempArrays ArrayList and returns a new ArrayList
+
+        //this ArrayList has, in alphabetical order, every person who has that name
+
+        //NOTICE: this should NOT change or be used to change the ArrayList in the TempArrays class
 
     }
 
     //creates the login page as a content pane and returns it, currently returns void due to method being incomplete, replace with Container to complete
     private void loginPage()
     {
-        //form login page background using the background JPanel
+        //create login page background using the background JPanel
 
-        //add textfield for Username and jpasswordfield for Password
+        //add textfield Username and jpasswordfield Password
 
-        //in the two textfields, when enter is pressed, call the login method
+        //in the two textfields, when enter is pressed, call the login method taking the username and the password as parrameters
+
+        //when the login method returns true, shift to the main page
 
     }
 
+    //Creates a taskbar with a back and forward button, used for almost every page
     private void taskBar()
     {
         background = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         background.setBackground(Color.GRAY);
 
         JButton back = new JButton("<-");
-        back.addActionListener(e -> System.out.println("Back"));    //replace with code to go back a page
+        back.addActionListener(e -> setPage(pages.get(currentIndex - 1)));    //replace with code to go back a page
         background.add(back);
 
         JButton forward = new JButton("->");
-        forward.addActionListener(e -> System.out.println("Forward"));      //replace with code to go forward a page
+        forward.addActionListener(e -> setPage(pages.get(currentIndex + 1)));      //replace with code to go forward a page
         background.add(forward);
 
         frame.add(background, BorderLayout.NORTH);
@@ -83,18 +93,16 @@ public class GUI
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-    public JFrame getJFrame()
-    {
-        return frame;
-    }
 
-    public void addToPages(Container newPage)
+    public void addToPages(JFrame newPage)
     {
         pages.add(newPage);
+        currentIndex++;
     }
-    private void setPage(Container newPage)
+
+    private void setPage(JFrame newPage)
     {
-        frame.setContentPane(newPage);
+        frame = newPage;
         addToPages(newPage);
     }
 }
