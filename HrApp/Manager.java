@@ -2,11 +2,11 @@ package HrApp;
 
 import java.util.ArrayList;
 
-public class GeneralManager extends AbstractManager {
+public class Manager extends AbstractManager {
     private ArrayList<Employee> employees;
     protected SecurityClearance clearance;
 
-    public GeneralManager() {
+    public Manager() {
         super();
         this.clearance = SecurityClearance.MEDIUM;
         this.employees = new ArrayList<>();
@@ -23,12 +23,7 @@ public class GeneralManager extends AbstractManager {
     }
 
     @Override
-    public void editTags(Employee employee) {
-        //employee.getTags;
-    }
-
-    @Override
     public void editData(Employee employee) {
-        // what data do we want to edit?
+        // not sure what to put here yet
     }
 }

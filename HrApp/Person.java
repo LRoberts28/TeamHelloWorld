@@ -1,22 +1,26 @@
 package HrApp;
 
+import java.util.ArrayList;
+
 public class Person { // class diagram says User.java but i didn't want to break code.
     private String name;
     private int age;
     private String email;
-    private String password;
+    private char[] password;
     protected SecurityClearance clearance;
+    private ArrayList<String> tags;
 
     // default constructor for Person
     public Person() {
     }
 
     // person constructor
-    public Person(String name, int age, String email, String password) {
+    public Person(String name, int age, String email, char[] password) {
         this.name = name;
         this.age = age;
         this.email = email;
         this.password = password;
+        this.tags = new ArrayList<>();
         clearance = SecurityClearance.LOW;
     }
 
@@ -25,9 +29,19 @@ public class Person { // class diagram says User.java but i didn't want to break
         return email;
     }
 
+    // method to get persons email
+    public String getEmail() {
+        return email;
+    }
+
     // method to set persons password
-    public void setPassword(String password) {
+    public void setPassword(char[] password) {
         this.password = password;
+    }
+
+    // method to get persons password
+    public char[] getPassword() {
+        return password;
     }
 
     // method to set persons name
@@ -35,9 +49,29 @@ public class Person { // class diagram says User.java but i didn't want to break
         this.name = name;
     }
 
+    // method to get persons name
+    public String getName() {
+        return name;
+    }
+
     // method to set persons age
     public void setAge(int age) {
         this.age = age;
+    }
+
+    // method to get persons age
+    public int getAge() {
+        return age;
+    }
+
+    // method to add tags to array list
+    public void addTags(String Tag) {
+        tags.add(Tag);
+    }
+
+    // method to get tags from arraylist
+    public ArrayList<String> getTags() {
+        return tags;
     }
 
     // method for setting the persons clearance level
@@ -50,26 +84,8 @@ public class Person { // class diagram says User.java but i didn't want to break
         return clearance;
     }
 
-    // method to get persons email
-    public String getEmail() {
-        return email;
-    }
-
-    // method to get persons password
-    public String getPassword() {
-        return password;
-    }
-
-    // method to get persons name
-    public String getName() {
-        return name;
-    }
-
-    // method to get persons age
-    public int getAge() {
-        return age;
-    }
-
+    // overrided method to return custom toString()
+    @Override
     public String toString() {
         return name + " " + age + " " + email;
     }
@@ -85,22 +101,22 @@ public class Person { // class diagram says User.java but i didn't want to break
  * +email: String------------------------------------ // done
  * +password: String------------------------------------ // done
  * +name: String------------------------------------ // done
- * +securityClearance: enum // working on
+ * +securityClearance: enum ------------------------------ // done
  * +description: String //written to embedded file using BufferedWriter
  * +tags: Enum
  * +accountRecovery()
- * +addTags()
+ * +addTags() ------------------------------ // done
  * +getEmail()------------------------------------ // done
  * +getPassword()------------------------------------ // done
  * +getName()------------------------------------ // done
- * +getSecurity() ---------- in progress-------------
- * +getTags()
+ * +getSecurity() ------------------------------ // done
+ * +getTags() ------------------------------ // done
  * +logIn()
  * +save()
  * +setPassword()------------------------------------ // done
  * +setEmail()------------------------------------ // done
  * +setName()------------------------------------ // done
- * +setSecurity()
+ * +setSecurity() ------------------------------ // done
  * +switchUser()
  * +readDesc()
  * +removeUser()
