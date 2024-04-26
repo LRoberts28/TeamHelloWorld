@@ -11,7 +11,7 @@ public class HrMain {
     {
         //Establishing all the people in TempArrays
         TempArrays.addUser(new Person("Jake Puckett", 21, "JPuckett2@msu.net", "password"));
-        TempArrays.addUser(new Person("Jack Rhea", 20, "JRhea1@msu.net", "password"));
+        TempArrays.addUser(new Person("Jack Ray", 20, "JRay1@msu.net", "password"));
         TempArrays.addUser(new Person("Michael Jackson", 45, "MJackson1@msu.net", "password"));
         TempArrays.addUser(new Person("Jason Puckett", 52, "JPuckett1@msu.net", "password"));
         TempArrays.addUser(new Person("Charlize Klay", 19, "CKlay1@msu.net", "password"));
