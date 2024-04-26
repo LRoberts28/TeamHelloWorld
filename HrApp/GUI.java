@@ -1,43 +1,65 @@
 package HrApp;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class GUI 
+public class GUI implements KeyListener
 {
     private JFrame frame;
-    private JPanel background;
-    private Container mainMenu;
-    private ArrayList<JFrame> pages = new ArrayList<JFrame>();
-    private int currentIndex = 0;
+    private CardLayout cardLayout;
+    private JPanel primaryPage;
+    private ArrayList<JPanel> history;
+    private int currentPage;
+    private String searchResults;
+
+    private final String[] pageNames = {"Home", "Login", "Search", "Profile"};
 
     public GUI()
     {
-        frame = mainPage();
         initiallize();
+
+        primaryPage = new JPanel(cardLayout);
+        primaryPage.add(pageNames[0], homePage());
+        primaryPage.add(pageNames[1], loginPage());
+
+        frame.add(primaryPage);
+
     }
 
 
     //creates the main page as a content pane and returns it
-    private JFrame mainPage()
+    private JPanel homePage()
     {
-        frame = new JFrame("main");
-        taskBar();
+        JPanel grid = new JPanel(new GridLayout(25,1));
+        JPanel background = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        grid.setName(pageNames[0]);
+        background.setBackground(Color.GRAY);
 
-        background = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        background.setBackground(Color.DARK_GRAY);
-        frame.add(background, BorderLayout.CENTER);
+        TextField search = new TextField("              ");
+        search.addKeyListener(this);
 
-        TextField search = new TextField("Start your search here!");
+        JButton searchButton = new JButton("Search");
+        searchButton.addActionListener(e -> System.out.println(search.getName()));
 
         //Add keylistener to textfield to log what is typed and when enter is pressed, call search function
 
         background.add(search, BorderLayout.CENTER);
+        background.add(searchButton);
 
-        return frame;
+        grid.add(taskBar());
+        grid.add(background);
+
+        for(int i = 0; i <  23; i++)
+        {
+            JPanel filler = new JPanel();
+            filler.setBackground(Color.GRAY);
+            grid.add(filler);
+        }
+
+        return grid;
+        
     }
 
     //searches for any person who has that name
@@ -52,7 +74,7 @@ public class GUI
     }
 
     //creates the login page as a content pane and returns it, currently returns void due to method being incomplete, replace with Container to complete
-    private void loginPage()
+    private JPanel loginPage()
     {
         //create login page background using the background JPanel
 
@@ -61,49 +83,101 @@ public class GUI
         //in the two textfields, when enter is pressed, call the login method taking the username and the password as parrameters
 
         //when the login method returns true, shift to the main page
+        JPanel background = new JPanel();
+        background.setName(pageNames[1]);
+
+        background.add(taskBar());
+        return background;
 
     }
 
     //Creates a taskbar with a back and forward button, used for almost every page
-    private void taskBar()
+    private JPanel taskBar()
     {
-        background = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        background.setBackground(Color.GRAY);
+        JPanel background = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        background.setBackground(Color.DARK_GRAY);
 
         JButton back = new JButton("<-");
-        back.addActionListener(e -> setPage(pages.get(currentIndex - 1)));    //replace with code to go back a page
+        back.addActionListener(e -> back());    
         background.add(back);
 
         JButton forward = new JButton("->");
-        forward.addActionListener(e -> setPage(pages.get(currentIndex + 1)));      //replace with code to go forward a page
+        forward.addActionListener(e -> forward());      
         background.add(forward);
 
-        frame.add(background, BorderLayout.NORTH);
+        return background;
 
         //NOTE: you can edit the panel after it has been added!!!
     }
 
 
     
-    public void initiallize() //sets up the jframe 
+    public void initiallize() 
     {
-        
+        currentPage = 0;
+        history = new ArrayList<JPanel>();
+        cardLayout = new CardLayout();
+        searchResults = "";
+
+        frame = new JFrame("Page");
         frame.setSize(1000, 1000);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
-    public void addToPages(JFrame newPage)
+    private void back()
     {
-        pages.add(newPage);
-        currentIndex++;
+        if(currentPage> 0)
+        {
+            currentPage--;
+            cardLayout.show(primaryPage, history.get(currentPage).getName());
+        }
     }
-
-    private void setPage(JFrame newPage)
+    
+    private void forward()
     {
-        frame = newPage;
-        addToPages(newPage);
+        if(currentPage < history.size())
+        {
+            currentPage++;
+            cardLayout.show(primaryPage, history.get(currentPage).getName());
+        }
+
+    }
+    private void addHistory(JPanel page)
+    {
+        if(currentPage != history.size())
+        {
+            history.add(currentPage, page);
+            for(int i = history.size() - currentPage; i < history.size(); i++)
+            {
+                history.set(i, null);
+            }
+        }
+        else
+        {
+            history.add(page);
+        }
+        currentPage++;
+    }
+    @Override
+    public void keyPressed(KeyEvent e) 
+    {
+        searchResults += e.getKeyChar();
+        if(e.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            //search();
+        }
+
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
     }
 }
 
