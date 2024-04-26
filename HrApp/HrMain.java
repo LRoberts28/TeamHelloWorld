@@ -1,5 +1,8 @@
 package HrApp;
 
+import java.awt.EventQueue;
+import java.util.Locale;
+
 public class HrMain {
     public static void main(String[] args) 
     {
