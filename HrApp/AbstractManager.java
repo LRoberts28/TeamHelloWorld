@@ -12,9 +12,6 @@ abstract class AbstractManager {
     // abstract method to return data of an employee
     public abstract void returnData(Employee employee);
 
-    // abstract method to edit tags of an employee
-    public abstract void editTags(Employee employee);
-
     // abstract method to edit data of an employee
     public abstract void editData(Employee employee);
 
