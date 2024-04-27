@@ -1,77 +1,28 @@
 package HrApp;
 
-import java.awt.EventQueue;
-import java.util.Locale;
-
 public class HrMain {
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
+        SetUp();
 
-        // Creates and Instantiates person, job, and hardSkill
-        Person person = new Person("John Doe", 25, "johnDoe@gmail.com", Helper.stringToCharArray("password1234")); // added
-                                                                                                                   // email
-                                                                                                                   // password
-        // Job job = new Job("Chief Engineer", 62);
-        HardSkill hardSkill = new HardSkill("Coding in Python", "Expert");
-        System.out.println(person.getClearance()); // added by Lance
+        LoginPage loginPage = new LoginPage(); //sets up login page 
 
-        // Tests the Person class's getName() and getAge()
-        System.out.println("Name: " + person.getName() + "\n");
-        System.out.println("Age: " + person.getAge() + "\n");
+    }
+    public static void SetUp()
+    {
+        //Establishing all the employees in TempArrays
+        TempArrays.addUser(new Employee("Jake Puckett", (short)21, "JPuckett2@msu.net", Helper.stringToCharArray("password"), "121, Generic Street, Town, KY", "120-102-3421", "Code Tester", 20));
+        TempArrays.addUser(new Employee("Jack Ray", (short)20, "JRay1@msu.net", Helper.stringToCharArray("password"), "122, Generic Street, Town, KY", "120-102-1234", "Code Tester", 3));
+        TempArrays.addUser(new Employee("Michael Jackson", (short)45, "MJackson1@msu.net", Helper.stringToCharArray("password"), "123, Generic Street, Town, KY", "120-102-2345", "Code Tester", 20));
+        TempArrays.addUser(new Employee("Jason Puckett", (short)52, "JPuckett1@msu.net", Helper.stringToCharArray("password"), "124, Generic Street, Town, KY", "120-102-3456", "Code Tester", 35));
+        TempArrays.addUser(new Employee("Charlize Klay", (short)19, "CKlay1@msu.net", Helper.stringToCharArray("password"), "125, Generic Street, Town, KY", "120-102-5678", "Code Tester", 20));
+        TempArrays.addUser(new Employee("Stuart Thea", (short)55, "SThea1@msu.net", Helper.stringToCharArray("password"), "126, Generic Street, Town, KY", "120-102-5687", "Code Tester", 12));
+        TempArrays.addUser(new Employee("Mason Myers", (short)31, "MMyers1@msu.net", Helper.stringToCharArray("password"), "127, Generic Street, Town, KY", "120-102-4335", "Code Tester", 19));
+        TempArrays.addUser(new Employee("Sam Cromwell", (short)47, "SCromwell1@msu.net", Helper.stringToCharArray("password"), "128, Generic Street, Town, KY", "120-102-2764", "Code Tester", 12));
+        TempArrays.addUser(new Employee("Tyler Reed", (short)21, "TReed1@msu.net", Helper.stringToCharArray("password"), "129, Generic Street, Town, KY", "120-102-4528", "Code Tester", 55));
+        TempArrays.addUser(new Employee("Madison Rowe", (short)21, "MRowe1@msu.net", Helper.stringToCharArray("password"), "130, Generic Street, Town, KY", "120-102-9752", "Code Tester", 1));
 
-        // Tests the Person class's setName() and setAge()
-        person.setName("Alex");
-        person.setAge(20);
-        System.out.println("Name: " + person.getName() + "\n");
-        System.out.println("Age: " + person.getAge() + "\n");
-
-        // Tests the Job class's getTitle() and getExperience()
-        // System.out.println("Job's getTitle() test: " + job.getTitle() + "\n");
-        // System.out.println("getExperience() test: " + job.getExperience() + "\n");
-
-        // Tests the Job class's setTitle() and setAge()
-        // job.setTitle("Student");
-        // job.setExperience(128);
-        // System.out.println("Job's getTitle() test: " + job.getTitle() + "\n");
-        // System.out.println("getExperience() test: " + job.getExperience() + "\n");
-
-        // Tests the HardSkill class's getTitle() and getLevel()
-        System.out.println("HardSkill's getTitle() test: " + hardSkill.getTitle() + "\n");
-        System.out.println("getLevel() test " + hardSkill.getLevel() + "\n");
-
-        // Tests the HardSkill class's setTitle() and setLevel()
-        hardSkill.setTitle("Java Programing");
-        hardSkill.setLevel("Intermediate");
-        System.out.println("Job's getTitle() test: " + hardSkill.getTitle() + "\n");
-        System.out.println("getLevel() test: " + hardSkill.getLevel() + "\n");
-
-        // Tests the Person class's displayDetails()
-        System.out.println("Person's displayDetails() test:");
-        person.displayDetails();
-
-        // Tests the Job class's displayDetails()
-        System.out.println("Job's displayDetails() test:");
-        // job.displayDetails();
-
-        // Tests the HardSkill class's displayDetails()
-        System.out.println("HardSkill's displayDetails() test:");
-        hardSkill.displayDetails();
-
-        System.out.println("Add User:");
-        TempArrays.addUser(person);
-        System.out.println("Show all Users:");
-        System.out.println(TempArrays.getAllUsers());
-
-        Locale.setDefault(new Locale("tr", "TR"));
-
-        EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-
-                new LoginPage();
-
-            }
-        });
-
+        //Establishing all managers in TempArrays
+        TempArrays.addUser(new Manager(new Employee("Alex Rhea", (short)21, "ARhea1@msu.net", Helper.stringToCharArray("password"), "131, Generic Street, Town, KY", "120-102-3144", "Code Tester", 7000)));
     }
 }

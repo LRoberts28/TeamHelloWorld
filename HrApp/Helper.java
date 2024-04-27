@@ -37,4 +37,5 @@ public class Helper {
         // Convert the StringBuilder to a string and return it
         return stringBuilder.toString();
     }
+
 }

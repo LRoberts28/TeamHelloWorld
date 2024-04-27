@@ -1,129 +1,235 @@
 package HrApp;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class GUI 
+public class GUI
 {
     private JFrame frame;
-    private JPanel background;
-    private Container mainMenu;
+    private CardLayout cardLayout;
+    private JPanel primaryPage;
+    private ArrayList<JPanel> history;
+    private int currentPage;
+    private ArrayList<Person> results;
+    private JPanel profile, home;
+    private Person me;
+    private boolean hasInitialized;
 
-    //Arraylists of Containers to contain content panes to save each page
-    ArrayList<Container> pages = new ArrayList<Container>();
-    int currentIndex = 0;
+    private final String[] pageNames = {"Home", "Profile"};
 
-    public static void main(String[] args)
+    public GUI(Person me)
     {
-        GUI gui = new GUI();
-
-    }
-    public GUI()
-    {
-        frame = new JFrame("Main Page");
         initiallize();
-        loginPage();
-    }
-    public void addToPages(Container newPage)
-    {
-        pages.add(newPage);
-        currentIndex++;
-    }
-    private void setPage(Container newPage)
-    {
-        frame.setContentPane(newPage);
-        addToPages(newPage);
+        this.me = me;
+
+        home = homePage(me);
+        profile = profile(null);
+
+        primaryPage = new JPanel(cardLayout);
+        primaryPage.add(pageNames[0], home);
+        primaryPage.add(pageNames[1], profile);
+
+        frame.add(primaryPage);
+
     }
 
-    //creates the main page as a content pane and returns it
-    private Container mainPage()
+
+    //creates the main page as a JPanel and returns it
+    private JPanel homePage(Person me)
     {
-        taskBar();
-        background = new JPanel();
-        background.setLayout(new FlowLayout(FlowLayout.CENTER));
-        background.setBackground(Color.DARK_GRAY);
-        frame.add(background, BorderLayout.CENTER);
-        TextField search = new TextField("Start your search here!");
-        search.addKeyListener(new KeyListener(){
-            private String returned = "";
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == e.VK_ENTER)
+        hasInitialized = false;
+        JPanel grid = new JPanel(new GridLayout(0, 1));
+        grid.setName(pageNames[0]);
+        JPanel background = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        background.setBackground(Color.GRAY);
+
+        TextField search = new TextField("              ");
+        JButton searchButton = new JButton("Search");
+        searchButton.addActionListener(e -> {
+            for(int i = 23; i > 1; i--)
+            {
+                if(hasInitialized)
                 {
-                    System.out.println(returned);
+                    grid.remove(i);
                 }
             }
-            @Override
-            public void keyReleased(KeyEvent e) {
+            ArrayList<Person> resultList = search(search.getText());
+            System.out.println(search.getText());
+            System.out.println(resultList);
+            
+            for(int i = 0; i < 22; i++)
+            {
+                JPanel resultJPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                if(i < resultList.size())
+                {
+                    resultJPanel.setBackground(Color.LIGHT_GRAY);
+                    Person thisPerson = resultList.get(i);
+                    JButton link = new JButton(thisPerson.getName());
+                    link.setBackground(Color.lightGray);
+                    link.addActionListener(E -> {
+                        this.profile = profile(thisPerson);
+                        primaryPage.add(pageNames[1], this.profile);
+                        cardLayout.show(primaryPage, pageNames[1]);
+                    });
+                    resultJPanel.add(link);
+                    
+                }
+                else
+                {
+                    resultJPanel.setBackground(Color.GRAY);
+                }
+                grid.add(resultJPanel);
             }
-            @Override
-            public void keyTyped(KeyEvent e) {
-                returned += e.getKeyChar();
-            }
+            this.home = grid;
+
         });
+        grid.add(taskBar());
 
         background.add(search, BorderLayout.CENTER);
-        return frame.getContentPane();
+        background.add(searchButton);
+
+        grid.add(background);
+        addHistory(grid);
+
+        searchButton.doClick();
+        hasInitialized = true;
+        return grid;
+        
     }
 
-    private Container loginPage()
+    private JPanel profile(Person person)
     {
-        background = new JPanel();
-        TextField username = new TextField("Username");
-        username.addKeyListener(new KeyListener() {
-            private String returned = "";
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == e.VK_ENTER)
+        JPanel background = new JPanel(new GridLayout(12, 1));
+        background.add(taskBar());
+        if(person != null)
+        {
+            background.add(new JLabel("Demographics:"));
+            background.add(new JLabel("     - Email: " + person.getEmail()));
+            background.add(new JLabel("     - Name: " + person.getName()));
+            background.add(new JLabel("     - Age: " + person.getAge()));
+            background.setBackground(Color.GRAY);
+            System.out.println("Showing info on " + person.getName());
+            if(me.getClearance() == SecurityClearance.MEDIUM || me.getClearance() == SecurityClearance.HIGH || person == me)
+            {
+                Employee employee = (Employee)person;
+                background.add(new JLabel("     - Address: " + employee.getAddress()));
+                background.add(new JLabel("     - Phone: " + employee.getPhone()));
+                background.add(new JLabel("     - Current Job: " + employee.getCurrJob()));
+                background.add(new JLabel("     - Number of Tasks Performed: " + employee.getTasksPerformed()));
+                background.add(new JLabel("     - Soft Skills: " + employee.getSoftSkills()));
+                background.add(new JLabel("     - Talents: " + employee.getTalents()));
+                background.add(new JLabel("     - Clearance: " + employee.getClearance()));
+            }
+            else
+            {
+                for(int i = 0; i < 6; i++)
                 {
-                    System.out.println(returned);
+                    JPanel filler = new JPanel();
+                    filler.setBackground(Color.GRAY);
+                    background.add(filler);
                 }
+
             }
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-            @Override
-            public void keyTyped(KeyEvent e) {
-                returned += e.getKeyChar();
-            }
+        }
+        background.setName(pageNames[1]);
+
+        addHistory(background);
+        return background;
+    }
+
+    //Creates a taskbar with a back and forward button, used for almost every page
+    private JPanel taskBar()
+    {
+        
+        JPanel background = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        background.setBackground(Color.DARK_GRAY);
+
+        JButton profile = new JButton(me.getName());
+        profile.addActionListener(F -> {
+            this.profile = profile(me);
+            primaryPage.add(pageNames[1], this.profile);
+            cardLayout.show(primaryPage, "Profile");
         });
-        frame.add(username);
+        background.add(profile);
+
+        JButton back = new JButton("<-");
+        back.addActionListener(e -> back());    
+        background.add(back);
+
+        JButton forward = new JButton("->");
+        forward.addActionListener(e -> forward());   
+
+        background.add(forward);
 
         return background;
 
+        //NOTE: you can edit the panel after it has been added!!!
     }
-    private void taskBar()
+
+
+    
+    public void initiallize() 
     {
-        JPanel j = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        j.setBackground(Color.GRAY);
+        currentPage = 0;
+        history = new ArrayList<JPanel>();
+        cardLayout = new CardLayout();
 
-        JButton back = new JButton("<-");
-        back.addActionListener(e -> setPage(pages.get(currentIndex - 1)));
-
-        JButton forward = new JButton("->");
-        forward.addActionListener(e -> setPage(pages.get(currentIndex + 1)));
-        j.add(back);
-        j.add(forward);
-        frame.add(j, BorderLayout.NORTH);
-
-
-        //you can edit the panel after it has been added!!!
-    }
-    public void initiallize() //sets up the jframe for all of the tests
-    {
-        
+        frame = new JFrame("Page");
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage("HrApp\\Hello World HR App Logo Idea.png"));
         frame.setSize(1000, 1000);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-    public JFrame getJFrame()
+
+    private void back()
     {
-        return frame;
+        if(currentPage> 0)
+        {
+            currentPage--;
+            cardLayout.show(primaryPage, history.get(currentPage).getName());
+        }
+    }
+    
+    private void forward()
+    {
+        if(currentPage < history.size())
+        {
+            currentPage++;
+            cardLayout.show(primaryPage, history.get(currentPage).getName());
+        }
+
+    }
+    private void addHistory(JPanel page)
+    {
+        if(currentPage != history.size())
+        {
+            history.add(currentPage, page);
+            for(int i = history.size() - currentPage; i < history.size(); i++)
+            {
+                history.set(i, null);
+            }
+        }
+        else
+        {
+            history.add(page);
+        }
+        currentPage++;
     }
 
-    
+    public ArrayList<Person> search(String name)
+    {
+        results = new ArrayList<Person>();
+        for(Person person: TempArrays.getAllUsers())
+        {
+            if(person.getName().contains(name))
+            {
+                results.add(person);
+            }
+        }
+        return results;
+    }
+
 }
 
 

@@ -2,7 +2,6 @@ package HrApp;
 
 import java.awt.Color;
 //import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Toolkit;
@@ -25,7 +24,7 @@ public class LoginPage extends JFrame {
     public static final int H_FRAME = 360;
     public static final int W_FRAME = 540;
     private JPanel contentPane;
-    private JButton button_login, button_register;
+    private JButton button_login; //, button_register;
     private JLabel label_username, label_password, label_icon, label_errorText;
     private JTextField textField_username;
     private JPasswordField passwordField_password;
@@ -51,16 +50,16 @@ public class LoginPage extends JFrame {
 
         GUI();
 
-        button_register = new JButton("Register");
-        button_register.setBounds(textField_username.getX() + 20, label_username.getY() + 120, 80, 22);
-        button_register.setFocusPainted(false);
-        button_register.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openRegistrationForm();
-            }
-        });
-        contentPane.add(button_register);
+        //button_register = new JButton("Register");
+        //button_register.setBounds(textField_username.getX() + 20, label_username.getY() + 120, 80, 22);
+        //button_register.setFocusPainted(false);
+        //button_register.addActionListener(new ActionListener() {
+            //@Override
+            //public void actionPerformed(ActionEvent e) {
+               // openRegistrationForm();
+            //}
+        //});
+        //contentPane.add(button_register);
 
         button_login.addActionListener(new ActionListener() {
             @Override
@@ -82,6 +81,10 @@ public class LoginPage extends JFrame {
         if (user != null) {
             JOptionPane.showMessageDialog(null, "Login successful");
             System.out.println("Login Successful");
+
+            this.dispose();
+
+            GUI gui = new GUI(user); //It doesn't know what person you are......
 
             // Perform further actions upon successful login
             // if user cannot be found then show invalid username or password
@@ -112,33 +115,19 @@ public class LoginPage extends JFrame {
         textField_username = new JTextField();
         textField_username.setBounds(label_username.getX() + label_username.getWidth() + 30,
                 label_username.getY(), 120, label_username.getHeight());
-        textField_username.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                passwordField_password.requestFocus();
-            }
-        });
+        textField_username.addActionListener(e -> passwordField_password.requestFocus());
         contentPane.add(textField_username);
 
         passwordField_password = new JPasswordField();
         passwordField_password.setBounds(textField_username.getX(), label_password.getY(),
                 120, label_password.getHeight());
-        passwordField_password.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                button_login.doClick();
-            }
-        });
+        passwordField_password.addActionListener(e-> button_login.doClick());
         contentPane.add(passwordField_password);
 
         button_login = new JButton("Login");
         button_login.setBounds(textField_username.getX() + 20, label_username.getY() + 80, 80, 22);
         button_login.setFocusPainted(false);
-        button_login.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
+        button_login.addActionListener(e-> {
                 if (textField_username.getText().equals("")
                         || String.valueOf(passwordField_password.getPassword()).equals("")) {
 
@@ -148,10 +137,7 @@ public class LoginPage extends JFrame {
 
                     label_errorText.setText("");
 
-                }
-
-            }
-        });
+                } });
         contentPane.add(button_login);
 
         label_icon = new JLabel(
@@ -171,62 +157,62 @@ public class LoginPage extends JFrame {
     }
 
     // creates function that adds a register button and allows a user to register
-    private void openRegistrationForm() {
-        JFrame registerFrame = new JFrame("Register");
-        registerFrame.setSize(300, 250);
-        registerFrame.setLocationRelativeTo(null);
-        registerFrame.setLayout(new FlowLayout());
+    //private void openRegistrationForm() {
+        //JFrame registerFrame = new JFrame("Register");
+        //registerFrame.setSize(300, 250);
+        //registerFrame.setLocationRelativeTo(null);
+        //registerFrame.setLayout(new FlowLayout());
 
         // Create labels and text fields for name, age, email, and password
-        JLabel label_name = new JLabel("Name:");
-        JTextField textField_name = new JTextField(20);
-        JLabel label_age = new JLabel("Age:");
-        JTextField textField_age = new JTextField(20);
-        JLabel label_email = new JLabel("Email:");
-        JTextField textField_email = new JTextField(20);
-        JLabel label_password = new JLabel("Password:");
-        JPasswordField passwordField_password = new JPasswordField(20);
+        //JLabel label_name = new JLabel("Name:");
+        //JTextField textField_name = new JTextField(20);
+        //JLabel label_age = new JLabel("Age:");
+        //JTextField textField_age = new JTextField(20);
+        //JLabel label_email = new JLabel("Email:");
+        //JTextField textField_email = new JTextField(20);
+        //JLabel label_password = new JLabel("Password:");
+        //JPasswordField passwordField_password = new JPasswordField(20);
 
         // Create register button
-        JButton button_register = new JButton("Register");
-        button_register.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String name = textField_name.getText();
-                int age = Integer.parseInt(textField_age.getText());
-                String email = textField_email.getText();
-                char[] password = passwordField_password.getPassword();
-                registerUser(name, age, email, password);
-                registerFrame.dispose();
-            }
-        });
+        //JButton button_register = new JButton("Register");
+        //button_register.addActionListener(new ActionListener() {
+            //@Override
+            //public void actionPerformed(ActionEvent e) {
+                //String name = textField_name.getText();
+                //int age = Integer.parseInt(textField_age.getText());
+                //String email = textField_email.getText();
+                //char[] password = passwordField_password.getPassword();
+                //registerUser(name, age, email, password);
+                //registerFrame.dispose();
+            //}
+        //});
 
         // Add components to registration form
-        registerFrame.add(label_name);
-        registerFrame.add(textField_name);
-        registerFrame.add(label_age);
-        registerFrame.add(textField_age);
-        registerFrame.add(label_email);
-        registerFrame.add(textField_email);
-        registerFrame.add(label_password);
-        registerFrame.add(passwordField_password);
-        registerFrame.add(button_register);
+        //registerFrame.add(label_name);
+        //registerFrame.add(textField_name);
+        //registerFrame.add(label_age);
+        //registerFrame.add(textField_age);
+        //registerFrame.add(label_email);
+        //registerFrame.add(textField_email);
+        //registerFrame.add(label_password);
+        //registerFrame.add(passwordField_password);
+        //registerFrame.add(button_register);
 
-        registerFrame.setVisible(true);
-    }
+        //registerFrame.setVisible(true);
+    //}
 
     // Method to register a new user
-    private void registerUser(String name, int age, String email, char[] password) {
+    //private void registerUser(String name, int age, String email, char[] password) {
         // Create a new Person object with the provided email and password
 
-        Person newUser = new Person(name, age, email, password);
+        //Person newUser = new Person(name, age, email, password);
 
         // Add the new user to TempArrays
-        TempArrays.addUser(newUser);
+        //TempArrays.addUser(newUser);
 
         // Display a success message
-        JOptionPane.showMessageDialog(null, "Registration successful");
-    }
+        //JOptionPane.showMessageDialog(null, "Registration successful");
+    //}
 }
 
 // }
