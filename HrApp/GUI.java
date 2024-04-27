@@ -1,97 +1,164 @@
 package HrApp;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class GUI implements KeyListener
+public class GUI
 {
     private JFrame frame;
     private CardLayout cardLayout;
     private JPanel primaryPage;
     private ArrayList<JPanel> history;
     private int currentPage;
-    private String searchResults;
+    private ArrayList<Person> results;
+    private JPanel profile, home;
+    private Person me;
+    private boolean hasInitialized;
 
-    private final String[] pageNames = {"Home", "Login", "Search", "Profile"};
+    private final String[] pageNames = {"Home", "Profile"};
 
-    public GUI()
+    public GUI(Person me)
     {
         initiallize();
+        this.me = me;
+
+        home = homePage(me);
+        profile = profile(null);
 
         primaryPage = new JPanel(cardLayout);
-        primaryPage.add(pageNames[0], homePage());
-        primaryPage.add(pageNames[1], loginPage());
+        primaryPage.add(pageNames[0], home);
+        primaryPage.add(pageNames[1], profile);
 
         frame.add(primaryPage);
 
     }
 
 
-    //creates the main page as a content pane and returns it
-    private JPanel homePage()
+    //creates the main page as a JPanel and returns it
+    private JPanel homePage(Person me)
     {
-        JPanel grid = new JPanel(new GridLayout(25,1));
-        JPanel background = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        hasInitialized = false;
+        JPanel grid = new JPanel(new GridLayout(0, 1));
         grid.setName(pageNames[0]);
+        JPanel background = new JPanel(new FlowLayout(FlowLayout.CENTER));
         background.setBackground(Color.GRAY);
 
         TextField search = new TextField("              ");
-        search.addKeyListener(this);
-
         JButton searchButton = new JButton("Search");
-        searchButton.addActionListener(e -> System.out.println(search.getName()));
+        searchButton.addActionListener(e -> {
+            for(int i = 23; i > 1; i--)
+            {
+                if(hasInitialized)
+                {
+                    grid.remove(i);
+                }
+            }
+            ArrayList<Person> resultList = search(search.getText());
+            System.out.println(search.getText());
+            System.out.println(resultList);
+            
+            for(int i = 0; i < 22; i++)
+            {
+                JPanel resultJPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                if(i < resultList.size())
+                {
+                    resultJPanel.setBackground(Color.LIGHT_GRAY);
+                    Person thisPerson = resultList.get(i);
+                    JButton link = new JButton(thisPerson.getName());
+                    link.setBackground(Color.lightGray);
+                    link.addActionListener(E -> {
+                        this.profile = profile(thisPerson);
+                        primaryPage.add(pageNames[1], this.profile);
+                        cardLayout.show(primaryPage, pageNames[1]);
+                    });
+                    resultJPanel.add(link);
+                    
+                }
+                else
+                {
+                    resultJPanel.setBackground(Color.GRAY);
+                }
+                grid.add(resultJPanel);
+            }
+            this.home = grid;
 
-        //Add keylistener to textfield to log what is typed and when enter is pressed, call search function
+        });
+        grid.add(taskBar());
 
         background.add(search, BorderLayout.CENTER);
         background.add(searchButton);
 
-        grid.add(taskBar());
         grid.add(background);
+        addHistory(grid);
 
-        for(int i = 0; i <  23; i++)
-        {
-            JPanel filler = new JPanel();
-            filler.setBackground(Color.GRAY);
-            grid.add(filler);
-        }
-
+        searchButton.doClick();
+        hasInitialized = true;
         return grid;
         
     }
 
-    //creates the login page as a content pane and returns it, currently returns void due to method being incomplete, replace with Container to complete
-    private JPanel loginPage()
+    private JPanel profile(Person person)
     {
-        //create login page background using the background JPanel
+        JPanel background = new JPanel(new GridLayout(12, 1));
+        background.add(taskBar());
+        if(person != null)
+        {
+            background.add(new JLabel("Demographics:"));
+            background.add(new JLabel("     - Email: " + person.getEmail()));
+            background.add(new JLabel("     - Name: " + person.getName()));
+            background.add(new JLabel("     - Age: " + person.getAge()));
+            background.setBackground(Color.GRAY);
+            System.out.println("Showing info on " + person.getName());
+            if(me.getClearance() == SecurityClearance.MEDIUM || me.getClearance() == SecurityClearance.HIGH || person == me)
+            {
+                Employee employee = (Employee)person;
+                background.add(new JLabel("     - Address: " + employee.getAddress()));
+                background.add(new JLabel("     - Phone: " + employee.getPhone()));
+                background.add(new JLabel("     - Current Job: " + employee.getCurrJob()));
+                background.add(new JLabel("     - Number of Tasks Performed: " + employee.getTasksPerformed()));
+                background.add(new JLabel("     - Soft Skills: " + employee.getSoftSkills()));
+                background.add(new JLabel("     - Talents: " + employee.getTalents()));
+                background.add(new JLabel("     - Clearance: " + employee.getClearance()));
+            }
+            else
+            {
+                for(int i = 0; i < 6; i++)
+                {
+                    JPanel filler = new JPanel();
+                    filler.setBackground(Color.GRAY);
+                    background.add(filler);
+                }
 
-        //add textfield Username and jpasswordfield Password
-
-        //in the two textfields, when enter is pressed, call the login method taking the username and the password as parrameters
-
-        //when the login method returns true, shift to the main page
-        JPanel background = new JPanel();
+            }
+        }
         background.setName(pageNames[1]);
 
-        background.add(taskBar());
+        addHistory(background);
         return background;
-
     }
 
     //Creates a taskbar with a back and forward button, used for almost every page
     private JPanel taskBar()
     {
+        
         JPanel background = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         background.setBackground(Color.DARK_GRAY);
+
+        JButton profile = new JButton(me.getName());
+        profile.addActionListener(F -> {
+            this.profile = profile(me);
+            primaryPage.add(pageNames[1], this.profile);
+            cardLayout.show(primaryPage, "Profile");
+        });
+        background.add(profile);
 
         JButton back = new JButton("<-");
         back.addActionListener(e -> back());    
         background.add(back);
 
         JButton forward = new JButton("->");
-        forward.addActionListener(e -> forward());      
+        forward.addActionListener(e -> forward());   
+
         background.add(forward);
 
         return background;
@@ -106,9 +173,9 @@ public class GUI implements KeyListener
         currentPage = 0;
         history = new ArrayList<JPanel>();
         cardLayout = new CardLayout();
-        searchResults = "";
 
         frame = new JFrame("Page");
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage("HrApp\\Hello World HR App Logo Idea.png"));
         frame.setSize(1000, 1000);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -150,12 +217,12 @@ public class GUI implements KeyListener
         currentPage++;
     }
 
-    public static ArrayList<Person> search(String name)
+    public ArrayList<Person> search(String name)
     {
-        ArrayList<Person> results = new ArrayList<Person>();
+        results = new ArrayList<Person>();
         for(Person person: TempArrays.getAllUsers())
         {
-            if(person.getName().equals(name))
+            if(person.getName().contains(name))
             {
                 results.add(person);
             }
@@ -163,26 +230,6 @@ public class GUI implements KeyListener
         return results;
     }
 
-
-    @Override
-    public void keyPressed(KeyEvent e) 
-    {
-        searchResults += e.getKeyChar();
-        if(e.getKeyCode() == KeyEvent.VK_ENTER)
-        {
-            search(searchResults);
-        }
-
-    }
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
-    public void keyTyped(KeyEvent e) {
-        
-    }
 }
 
 

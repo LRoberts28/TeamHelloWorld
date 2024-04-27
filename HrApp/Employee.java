@@ -22,10 +22,24 @@ public class Employee extends Person {
     // default constructor for Employee
     public Employee() {
     }
-
     // employee constructor
-    public Employee(String name, short age, String email, String password, String address,
+    public Employee(Person me, String address, String phone, String currJob, int tasksPerformed) {
+        super(me.getName(), me.getAge(), me.getEmail(), me.getPassword());
+        this.address = address;
+        this.phone = phone;
+        this.currJob = currJob;
+        this.tasksPerformed = tasksPerformed;
+        clearance = SecurityClearance.LOW;
+        this.jobHistory = new ArrayList<>();
+        this.softSkills = new ArrayList<>();
+        this.talents = new ArrayList<>();
+        this.gifts = new ArrayList<>();
+        this.evals = new ArrayList<>();
+    }
+    // employee constructor
+    public Employee(String name, short age, String email, char[] password, String address,
             String phone, String currJob, int tasksPerformed) {
+        super(name, age, email, password);
         this.address = address;
         this.phone = phone;
         this.currJob = currJob;
@@ -89,25 +103,25 @@ public class Employee extends Person {
 
     // Method to write a note to a file
     // not sure what idea we have for file so will leave it be for now
-    public static void writeNoteToFile(String note, String filePath) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(note); // Write the note to the file
+    //public static void writeNoteToFile(String note, String filePath) {
+        //try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            //writer.write(note); // Write the note to the file
             // outputs if the note was written to file correctly
-            System.out.println("Note has been successfully written to file: " + filePath);
-        } catch (IOException e) { // catches exception
-            System.err.println("Error writing note to file: " + e.getMessage());
-            e.printStackTrace(); // prints the stack trace of an exception to the standard error stream
-        }
-    }
+            //System.out.println("Note has been successfully written to file: " + filePath);
+        //} catch (IOException e) { // catches exception
+            //System.err.println("Error writing note to file: " + e.getMessage());
+            //e.printStackTrace(); // prints the stack trace of an exception to the standard error stream
+        //}
+    //}
 
     // Method to get note input from user
-    public static String getNoteFromUser() {
-        Scanner scanner = new Scanner(System.in); // opens the scanner
-        System.out.println("Enter your note:");
-        String note = scanner.nextLine(); // reads info
+    //public static String getNoteFromUser() {
+        //Scanner scanner = new Scanner(System.in); // opens the scanner
+        //System.out.println("Enter your note:");
+        //String note = scanner.nextLine(); // reads info
         // scanner.close();
-        return note; // returns the note with info
-    }
+        //return note; // returns the note with info
+    //}
 
     public static String saveFile() {
         Scanner scanner = new Scanner(System.in);

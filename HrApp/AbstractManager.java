@@ -1,19 +1,12 @@
 package HrApp;
 
-import java.util.ArrayList;
+interface AbstractManager {
 
-abstract class AbstractManager {
-    protected ArrayList<Employee> employees;
+    // method to return data of an employee
+    public void returnData(Employee employee);
 
-    public AbstractManager() {
-        this.employees = new ArrayList<>();
-    }
-
-    // abstract method to return data of an employee
-    public abstract void returnData(Employee employee);
-
-    // abstract method to edit data of an employee
-    public abstract void editData(Employee employee);
+    // method to edit data of an employee
+    public void editData(Employee employee);
 
 }
 

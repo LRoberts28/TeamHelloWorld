@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Person { // class diagram says User.java but i didn't want to break code.
     private String name;
-    private int age;
+    private short age;
     private String email;
     private char[] password;
     protected SecurityClearance clearance;
@@ -15,7 +15,7 @@ public class Person { // class diagram says User.java but i didn't want to break
     }
 
     // person constructor
-    public Person(String name, int age, String email, char[] password) {
+    public Person(String name, short age, String email, char[] password) {
         this.name = name;
         this.age = age;
         this.email = email;
@@ -55,12 +55,12 @@ public class Person { // class diagram says User.java but i didn't want to break
     }
 
     // method to set persons age
-    public void setAge(int age) {
+    public void setAge(short age) {
         this.age = age;
     }
 
     // method to get persons age
-    public int getAge() {
+    public short getAge() {
         return age;
     }
 
