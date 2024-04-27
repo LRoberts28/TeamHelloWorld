@@ -62,17 +62,6 @@ public class GUI implements KeyListener
         
     }
 
-    //searches for any person who has that name
-    private void search(String name)
-    {
-        //loops through all of the people in the TempArrays ArrayList and returns a new ArrayList
-
-        //this ArrayList has, in alphabetical order, every person who has that name
-
-        //NOTICE: this should NOT change or be used to change the ArrayList in the TempArrays class
-
-    }
-
     //creates the login page as a content pane and returns it, currently returns void due to method being incomplete, replace with Container to complete
     private JPanel loginPage()
     {
@@ -160,13 +149,28 @@ public class GUI implements KeyListener
         }
         currentPage++;
     }
+
+    public static ArrayList<Person> search(String name)
+    {
+        ArrayList<Person> results = new ArrayList<Person>();
+        for(Person person: TempArrays.getAllUsers())
+        {
+            if(person.getName().equals(name))
+            {
+                results.add(person);
+            }
+        }
+        return results;
+    }
+
+
     @Override
     public void keyPressed(KeyEvent e) 
     {
         searchResults += e.getKeyChar();
         if(e.getKeyCode() == KeyEvent.VK_ENTER)
         {
-            //search();
+            search(searchResults);
         }
 
     }

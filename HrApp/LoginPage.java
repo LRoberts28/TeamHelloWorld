@@ -83,6 +83,10 @@ public class LoginPage extends JFrame {
             JOptionPane.showMessageDialog(null, "Login successful");
             System.out.println("Login Successful");
 
+            this.dispose();
+
+            GUI gui = new GUI(); //It doesn't know what person you are......
+
             // Perform further actions upon successful login
             // if user cannot be found then show invalid username or password
         } else {
@@ -196,7 +200,7 @@ public class LoginPage extends JFrame {
                 int age = Integer.parseInt(textField_age.getText());
                 String email = textField_email.getText();
                 char[] password = passwordField_password.getPassword();
-                registerUser(name, age, email, password);
+                //registerUser(name, age, email, password);
                 registerFrame.dispose();
             }
         });
@@ -216,17 +220,17 @@ public class LoginPage extends JFrame {
     }
 
     // Method to register a new user
-    private void registerUser(String name, int age, String email, char[] password) {
+    //private void registerUser(String name, int age, String email, char[] password) {
         // Create a new Person object with the provided email and password
 
-        Person newUser = new Person(name, age, email, password);
+        //Person newUser = new Person(name, age, email, password);
 
         // Add the new user to TempArrays
-        TempArrays.addUser(newUser);
+        //TempArrays.addUser(newUser);
 
         // Display a success message
-        JOptionPane.showMessageDialog(null, "Registration successful");
-    }
+        //JOptionPane.showMessageDialog(null, "Registration successful");
+    //}
 }
 
 // }
