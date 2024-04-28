@@ -83,7 +83,20 @@ public class GUI
             this.home = grid;
 
         });
-        grid.add(taskBar());
+        JPanel taskBar = new JPanel(new GridLayout(1,2));
+        JPanel addUser = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        if(me.getClearance() == SecurityClearance.MEDIUM || me.getClearance() == SecurityClearance.HIGH)
+        {
+            JButton addUserButton = new JButton("New User");
+            addUserButton.addActionListener(e-> openRegistrationForm());
+            addUser.add(addUserButton);
+
+        }
+        addUser.setBackground(Color.DARK_GRAY);
+        taskBar.add(addUser);
+        taskBar.add(taskBar());
+
+        grid.add(taskBar);
 
         background.add(search, BorderLayout.CENTER);
         background.add(searchButton);
@@ -99,11 +112,22 @@ public class GUI
 
     private JPanel profile(Person person)
     {
-        JPanel background = new JPanel(new GridLayout(12, 1));
-        background.add(taskBar());
+        JPanel background = new JPanel(new GridLayout(13, 1));
+        JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        editPanel.setBackground(Color.DARK_GRAY);
+        if(me.getClearance() == SecurityClearance.MEDIUM || me.getClearance() == SecurityClearance.HIGH)
+        {
+            JButton edit = new JButton("Edit");
+            edit.addActionListener(e->openEditForm(person));
+            editPanel.add(edit);
+        }
+        JPanel taskBar = new JPanel(new GridLayout(1,2));
+        taskBar.add(editPanel);
+        taskBar.add(taskBar());
+        background.add(taskBar);
         if(person != null)
         {
-            background.add(new JLabel("Demographics:"));
+            background.add(new JLabel("     Demographics:"));
             background.add(new JLabel("     - Email: " + person.getEmail()));
             background.add(new JLabel("     - Name: " + person.getName()));
             background.add(new JLabel("     - Age: " + person.getAge()));
@@ -119,6 +143,7 @@ public class GUI
                 background.add(new JLabel("     - Soft Skills: " + employee.getSoftSkills()));
                 background.add(new JLabel("     - Talents: " + employee.getTalents()));
                 background.add(new JLabel("     - Clearance: " + employee.getClearance()));
+                background.add(new JLabel("     - Evaluations" + employee.getEvaluations()));
             }
             else
             {
@@ -174,7 +199,7 @@ public class GUI
         history = new ArrayList<JPanel>();
         cardLayout = new CardLayout();
 
-        frame = new JFrame("Page");
+        frame = new JFrame("HR App");
         frame.setIconImage(Toolkit.getDefaultToolkit().getImage("HrApp\\Hello World HR App Logo Idea.png"));
         frame.setSize(1000, 1000);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -228,6 +253,125 @@ public class GUI
             }
         }
         return results;
+    }
+
+     // creates function that adds a register button and allows a user to register
+    private void openRegistrationForm() {
+        JFrame registerFrame = new JFrame("Register");
+        registerFrame.setSize(300, 250);
+        registerFrame.setLocationRelativeTo(null);
+        registerFrame.setLayout(new FlowLayout());
+
+        // Create labels and text fields for name, age, email, and password
+        JLabel label_name = new JLabel("Name:");
+        JTextField textField_name = new JTextField(20);
+        JLabel label_age = new JLabel("Age:");
+        JTextField textField_age = new JTextField(20);
+        JLabel label_email = new JLabel("Email:");
+        JTextField textField_email = new JTextField(20);
+        JLabel label_password = new JLabel("Password:");
+        JPasswordField passwordField_password = new JPasswordField(20);
+
+        // Create register button
+        JButton button_register = new JButton("Register");
+        button_register.addActionListener(e-> 
+        {
+            String name = textField_name.getText();
+            int age = Integer.parseInt(textField_age.getText());
+            String email = textField_email.getText();
+            char[] password = passwordField_password.getPassword();
+            registerUser(name, (short)age, email, password);
+            registerFrame.dispose();
+        });
+
+        // Add components to registration form
+        registerFrame.add(label_name);
+        registerFrame.add(textField_name);
+        registerFrame.add(label_age);
+        registerFrame.add(textField_age);
+        registerFrame.add(label_email);
+        registerFrame.add(textField_email);
+        registerFrame.add(label_password);
+        registerFrame.add(passwordField_password);
+        registerFrame.add(button_register);
+
+        registerFrame.setVisible(true);
+    }
+
+    // Method to register a new user
+    private void registerUser(String name, short age, String email, char[] password) {
+        // Create a new Person object with the provided email and password
+
+        Person newUser = new Person(name, age, email, password);
+
+        Employee newEmployee = new Employee(newUser, "Temporary Address", "Temporary Phone", "Temporary Job Title", 0);
+
+        // Add the new user to TempArrays
+        TempArrays.addUser(newEmployee);
+
+        // Display a success message
+        JOptionPane.showMessageDialog(null, "Registration successful");
+    }
+
+     // creates function that adds a register button and allows a user to register
+     private void openEditForm(Person me) {
+        JFrame registerFrame = new JFrame("Edit " + me.getName());
+        registerFrame.setSize(300, 250);
+        registerFrame.setLocationRelativeTo(null);
+        registerFrame.setLayout(new FlowLayout());
+
+        // Create labels and text fields for name, age, email, and password
+        JLabel label_name = new JLabel("Name:");
+        JTextField textField_name = new JTextField(20);
+        textField_name.setText(me.getName());
+        JLabel label_age = new JLabel("Age:");
+        JTextField textField_age = new JTextField(20);
+        textField_age.setText("" + me.getAge());
+        JLabel label_email = new JLabel("Email:");
+        JTextField textField_email = new JTextField(20);
+        textField_email.setText(me.getEmail());
+        textField_email.setEditable(false);
+        JLabel label_password = new JLabel("Password:");
+        JPasswordField passwordField_password = new JPasswordField(20);
+        passwordField_password.setText(Helper.charArrayToString(me.getPassword()));
+
+        // Create register button
+        JButton button_register = new JButton("Save");
+        button_register.addActionListener(e-> 
+        {
+            String name = textField_name.getText();
+            int age = Integer.parseInt(textField_age.getText());
+            String email = textField_email.getText();
+            char[] password = passwordField_password.getPassword();
+            editUser(name, (short)age, email, password);
+            registerFrame.dispose();
+        });
+
+        // Add components to registration form
+        registerFrame.add(label_name);
+        registerFrame.add(textField_name);
+        registerFrame.add(label_age);
+        registerFrame.add(textField_age);
+        registerFrame.add(label_email);
+        registerFrame.add(textField_email);
+        registerFrame.add(label_password);
+        registerFrame.add(passwordField_password);
+        registerFrame.add(button_register);
+
+        registerFrame.setVisible(true);
+    }
+
+    // Method to register a new user
+    private void editUser(String name, short age, String email, char[] password) {
+        // Create a new Person object with the provided email and password
+
+        Person me = TempArrays.getUser(email);
+        me.setName(name);
+        me.setAge(age);
+        me.setPassword(password);
+
+        // Display a success message
+        JOptionPane.showMessageDialog(null, "Changes Saved");
     }
 
 }
