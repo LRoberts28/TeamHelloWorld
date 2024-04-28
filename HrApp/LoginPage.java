@@ -84,7 +84,7 @@ public class LoginPage extends JFrame {
 
             this.dispose();
 
-            GUI gui = new GUI(user); //It doesn't know what person you are......
+            GUI gui = new GUI(user); 
 
             // Perform further actions upon successful login
             // if user cannot be found then show invalid username or password
