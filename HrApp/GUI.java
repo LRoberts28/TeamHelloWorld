@@ -112,7 +112,7 @@ public class GUI
 
     private JPanel profile(Person person)
     {
-        JPanel background = new JPanel(new GridLayout(13, 1));
+        JPanel background = new JPanel(new GridLayout(14, 1));
         JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         editPanel.setBackground(Color.DARK_GRAY);
         if(me.getClearance() == SecurityClearance.MEDIUM || me.getClearance() == SecurityClearance.HIGH)
@@ -135,6 +135,12 @@ public class GUI
             System.out.println("Showing info on " + person.getName());
             if(me.getClearance() == SecurityClearance.MEDIUM || me.getClearance() == SecurityClearance.HIGH || person == me)
             {
+                JButton delete = new JButton("Delete");
+                delete.addActionListener(e -> deleteUser(person));
+                JPanel deletePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                deletePanel.setBackground(Color.gray);
+                deletePanel.add(delete);
+                background.add(deletePanel);
                 Employee employee = (Employee)person;
                 background.add(new JLabel("     - Address: " + employee.getAddress()));
                 background.add(new JLabel("     - Phone: " + employee.getPhone()));
@@ -372,6 +378,16 @@ public class GUI
 
         // Display a success message
         JOptionPane.showMessageDialog(null, "Changes Saved");
+    }
+
+    private void deleteUser(Person person)
+    {
+        int yesOrNo = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + person.getName() + "?");
+        if(yesOrNo == 0)
+        {
+            TempArrays.removeUser(person.getEmail());
+            JOptionPane.showMessageDialog(null, person + " deleted");
+        }
     }
 
 }
