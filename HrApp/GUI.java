@@ -43,8 +43,9 @@ public class GUI
         JPanel background = new JPanel(new FlowLayout(FlowLayout.CENTER));
         background.setBackground(Color.GRAY);
 
-        TextField search = new TextField("              ");
+        TextField search = new TextField("         ");
         JButton searchButton = new JButton("Search");
+        searchButton.setFocusPainted(false);
         searchButton.addActionListener(e -> {
             for(int i = 23; i > 1; i--)
             {
@@ -89,7 +90,9 @@ public class GUI
         {
             JButton addUserButton = new JButton("New User");
             addUserButton.addActionListener(e-> openRegistrationForm());
+            addUserButton.setFocusPainted(false);
             addUser.add(addUserButton);
+
 
         }
         addUser.setBackground(Color.DARK_GRAY);
@@ -118,6 +121,7 @@ public class GUI
         if(me.getClearance() == SecurityClearance.MEDIUM || me.getClearance() == SecurityClearance.HIGH)
         {
             JButton edit = new JButton("Edit");
+            edit.setFocusPainted(false);
             edit.addActionListener(e->openEditForm(person));
             editPanel.add(edit);
         }
@@ -136,11 +140,11 @@ public class GUI
             if(me.getClearance() == SecurityClearance.MEDIUM || me.getClearance() == SecurityClearance.HIGH || person == me)
             {
                 JButton delete = new JButton("Delete");
+                delete.setFocusPainted(false);
                 delete.addActionListener(e -> deleteUser(person));
                 JPanel deletePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
                 deletePanel.setBackground(Color.gray);
                 deletePanel.add(delete);
-                background.add(deletePanel);
                 Employee employee = (Employee)person;
                 background.add(new JLabel("     - Address: " + employee.getAddress()));
                 background.add(new JLabel("     - Phone: " + employee.getPhone()));
@@ -150,6 +154,7 @@ public class GUI
                 background.add(new JLabel("     - Talents: " + employee.getTalents()));
                 background.add(new JLabel("     - Clearance: " + employee.getClearance()));
                 background.add(new JLabel("     - Evaluations" + employee.getEvaluations()));
+                background.add(deletePanel);
             }
             else
             {
@@ -176,6 +181,7 @@ public class GUI
         background.setBackground(Color.DARK_GRAY);
 
         JButton profile = new JButton(me.getName());
+        profile.setFocusPainted(false);
         profile.addActionListener(F -> {
             this.profile = profile(me);
             primaryPage.add(pageNames[1], this.profile);
@@ -184,12 +190,13 @@ public class GUI
         background.add(profile);
 
         JButton back = new JButton("<-");
+        back.setFocusPainted(false);
         back.addActionListener(e -> back());    
         background.add(back);
 
         JButton forward = new JButton("->");
+        forward.setFocusPainted(false);
         forward.addActionListener(e -> forward());   
-
         background.add(forward);
 
         return background;
@@ -266,105 +273,148 @@ public class GUI
         JFrame registerFrame = new JFrame("Register");
         registerFrame.setSize(300, 250);
         registerFrame.setLocationRelativeTo(null);
-        registerFrame.setLayout(new FlowLayout());
+        registerFrame.setLayout(new GridLayout(5, 1));
+        registerFrame.setResizable(false);
 
         // Create labels and text fields for name, age, email, and password
-        JLabel label_name = new JLabel("Name:");
+        JLabel label_name = new JLabel("   Name:");
         JTextField textField_name = new JTextField(20);
-        JLabel label_age = new JLabel("Age:");
+        JPanel namePanel = new JPanel(new FlowLayout());
+        JLabel label_age = new JLabel("    Age:");
         JTextField textField_age = new JTextField(20);
-        JLabel label_email = new JLabel("Email:");
+        JPanel agePanel = new JPanel(new FlowLayout());
+        JLabel label_email = new JLabel("   Email:");
         JTextField textField_email = new JTextField(20);
+        JPanel emailPanel = new JPanel(new FlowLayout());
         JLabel label_password = new JLabel("Password:");
         JPasswordField passwordField_password = new JPasswordField(20);
+        JPanel passwordPanel = new JPanel(new FlowLayout());
 
         // Create register button
         JButton button_register = new JButton("Register");
+        button_register.setFocusPainted(false);
+        JPanel buttonFrame = new JPanel(new FlowLayout(FlowLayout.CENTER));
         button_register.addActionListener(e-> 
         {
             String name = textField_name.getText();
             int age = Integer.parseInt(textField_age.getText());
             String email = textField_email.getText();
             char[] password = passwordField_password.getPassword();
-            registerUser(name, (short)age, email, password);
-            registerFrame.dispose();
+            if (registerUser(name, (short)age, email, password))
+            {
+                registerFrame.dispose();
+            }
         });
+        buttonFrame.add(button_register);
+
+        // Add components to panels
+        namePanel.add(label_name);
+        namePanel.add(textField_name);
+        agePanel.add(label_age);
+        agePanel.add(textField_age);
+        emailPanel.add(label_email);
+        emailPanel.add(textField_email);
+        passwordPanel.add(label_password);
+        passwordPanel.add(passwordField_password);
+
 
         // Add components to registration form
-        registerFrame.add(label_name);
-        registerFrame.add(textField_name);
-        registerFrame.add(label_age);
-        registerFrame.add(textField_age);
-        registerFrame.add(label_email);
-        registerFrame.add(textField_email);
-        registerFrame.add(label_password);
-        registerFrame.add(passwordField_password);
-        registerFrame.add(button_register);
+        registerFrame.add(namePanel);
+        registerFrame.add(agePanel);
+        registerFrame.add(emailPanel);
+        registerFrame.add(passwordPanel);
+        registerFrame.add(buttonFrame);
 
         registerFrame.setVisible(true);
     }
 
     // Method to register a new user
-    private void registerUser(String name, short age, String email, char[] password) {
+    private boolean registerUser(String name, short age, String email, char[] password) {
         // Create a new Person object with the provided email and password
+        if(TempArrays.getUser(email) != null)
+        {
+            JOptionPane.showMessageDialog(null , "Email already in use");
+            return false;
+        }
+        else
+        {
+            Person newUser = new Person(name, age, email, password);
 
-        Person newUser = new Person(name, age, email, password);
+            Employee newEmployee = new Employee(newUser, "Temporary Address", "Temporary Phone", "Temporary Job Title", 0);
 
-        Employee newEmployee = new Employee(newUser, "Temporary Address", "Temporary Phone", "Temporary Job Title", 0);
+            // Add the new user to TempArrays
+            TempArrays.addUser(newEmployee);
 
-        // Add the new user to TempArrays
-        TempArrays.addUser(newEmployee);
-
-        // Display a success message
-        JOptionPane.showMessageDialog(null, "Registration successful");
+            // Display a success message
+            JOptionPane.showMessageDialog(null, "Registration successful");
+            return true;
+        }
     }
 
-     // creates function that adds a register button and allows a user to register
+
      private void openEditForm(Person me) {
-        JFrame registerFrame = new JFrame("Edit " + me.getName());
-        registerFrame.setSize(300, 250);
-        registerFrame.setLocationRelativeTo(null);
-        registerFrame.setLayout(new FlowLayout());
+        JFrame editFrame = new JFrame("Edit " + me.getName());
+        editFrame.setSize(300, 250);
+        editFrame.setLocationRelativeTo(null);
+        editFrame.setLayout(new GridLayout(5, 1));
+        editFrame.setResizable(false);
 
         // Create labels and text fields for name, age, email, and password
-        JLabel label_name = new JLabel("Name:");
+        JLabel label_name = new JLabel("   Name:");
         JTextField textField_name = new JTextField(20);
         textField_name.setText(me.getName());
-        JLabel label_age = new JLabel("Age:");
+        JPanel namePanel = new JPanel(new FlowLayout());
+
+        JLabel label_age = new JLabel("    Age:");
         JTextField textField_age = new JTextField(20);
         textField_age.setText("" + me.getAge());
-        JLabel label_email = new JLabel("Email:");
+        JPanel agePanel = new JPanel(new FlowLayout());
+
+        JLabel label_email = new JLabel("   Email:");
         JTextField textField_email = new JTextField(20);
         textField_email.setText(me.getEmail());
         textField_email.setEditable(false);
+        JPanel emailPanel = new JPanel(new FlowLayout());
+
         JLabel label_password = new JLabel("Password:");
         JPasswordField passwordField_password = new JPasswordField(20);
         passwordField_password.setText(Helper.charArrayToString(me.getPassword()));
+        JPanel passwordPanel = new JPanel(new FlowLayout());
 
-        // Create register button
-        JButton button_register = new JButton("Save");
-        button_register.addActionListener(e-> 
+        // Create save button
+        JButton button_save = new JButton("Save");
+        button_save.setFocusPainted(false);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        button_save.addActionListener(e-> 
         {
             String name = textField_name.getText();
             int age = Integer.parseInt(textField_age.getText());
             String email = textField_email.getText();
             char[] password = passwordField_password.getPassword();
             editUser(name, (short)age, email, password);
-            registerFrame.dispose();
+            editFrame.dispose();
         });
+        buttonPanel.add(button_save);
 
-        // Add components to registration form
-        registerFrame.add(label_name);
-        registerFrame.add(textField_name);
-        registerFrame.add(label_age);
-        registerFrame.add(textField_age);
-        registerFrame.add(label_email);
-        registerFrame.add(textField_email);
-        registerFrame.add(label_password);
-        registerFrame.add(passwordField_password);
-        registerFrame.add(button_register);
+        // Add components to panels
+        namePanel.add(label_name);
+        namePanel.add(textField_name);
+        agePanel.add(label_age);
+        agePanel.add(textField_age);
+        emailPanel.add(label_email);
+        emailPanel.add(textField_email);
+        passwordPanel.add(label_password);
+        passwordPanel.add(passwordField_password);
 
-        registerFrame.setVisible(true);
+        // Add components to edit page
+        editFrame.add(namePanel);
+        editFrame.add(agePanel);
+        editFrame.add(emailPanel);
+        editFrame.add(passwordPanel);
+        editFrame.add(buttonPanel);
+        
+
+        editFrame.setVisible(true);
     }
 
     // Method to register a new user
@@ -382,15 +432,19 @@ public class GUI
 
     private void deleteUser(Person person)
     {
-        int yesOrNo = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + person.getName() + "?");
-        if(yesOrNo == 0)
+        if(person == me)
         {
-            TempArrays.removeUser(person.getEmail());
-            JOptionPane.showMessageDialog(null, person + " deleted");
+            JOptionPane.showMessageDialog(null, "Cannot delete user: Currently signed in as " + me.getName());
+        }
+        else
+        {
+            int yesOrNo = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + person.getName() + "?");
+            if(yesOrNo == 0)
+            {
+                TempArrays.removeUser(person.getEmail());
+                JOptionPane.showMessageDialog(null, person + " deleted");
+            }
         }
     }
 
 }
-
-
-
