@@ -1,0 +1,48 @@
+﻿1. As a user, I need to be able to perform CRUD operations on all my members in the database.
+   1. Task: Create a user
+      1. Need a data table in the database to store member information with demographic data such as:
+         1. FirstName
+         2. LastName
+         3. Address
+         4. Phone
+         5. Email
+      2. Need a GUI to collect user data
+      3. Need to have a save button GUI
+         1. When the save is clicked the data added on the screen by a user is sent to the database and stored creating a new record for that new member
+      4. When data is stored correctly alert the user the save is completed.
+   2. Task: Read a user from the database
+      1. Write a method to be able to grab certain member's demographic information:
+         1. FirstName
+         2. LastName
+         3. Address
+         4. Phone
+         5. Email
+      2. Need a GUI to search for and select any specific user within the database
+      3. Need a search box or icon
+         1. When the search is clicked the database is called and the returned data is displayed on the GUI
+      4. If no data is found an alert message tells the user
+   3. Task: Edit a user’s information in the database
+      1. Need edit button to edit member demographics
+         1. When clicked, updated information on the GUI is sent to the database to update the existing record in the database
+         2. When the update is complete alert the user that the data is updated.
+   4. Task: Delete a user from the database
+      1. Add a delete button to the GUI for member demographics
+      2. When clicked provide a text box message to confirm the deletion
+      3. If confirmed send a delete query to the database to delete the record 
+      4. If successful, alert the user of the deletion being completed.
+2. As an executive, I need this app to have a secure login
+   1. Task: Secure login
+      1. Validation token for each user name and password
+      2. We need to ask the user to input their Username and password. 
+         1. A special validation token could be designed for that login to allow the user to enter. 
+3. As a manager, I need to be able to see the employees and all of their data points so I can better assess each employee.
+   1. Task: Higher position access
+      1. Allow a certain position to have different roles and access to parts within the app
+         1. Manager can see their employees below them and see their dashboard
+         2. Anyone higher than a manager can change an employee’s information including a manager
+      2. Allow a manager to be able to have a dashboard of an employee and all of their data points
+         1. Allow a manager to leave notes that employees cannot see but higher-ups can.
+4. As a manager, I need to be able to document recent changes to employee skill development to log their changes
+1. Task: Backlog of changes:
+      1. Create a data table in the database to log changes made to employee data
+      2. Create a GUI to display this data for managers and higher-ups
