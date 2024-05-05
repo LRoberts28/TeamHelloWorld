@@ -6,18 +6,17 @@ Packages to be imported:
 
 
 -------Class-------
+	Class
 	Properties
 	Methods
 	User
-	+email: String
++email: String
 +password: String
 +name: String
 +securityClearance: enum
-+description: String //written
-  to embedded file using
-  BufferedWriter
++description: String //written to embedded file using BufferedWriter
 +tags: Enum
-	+accountRecovery()
++accountRecovery()
 +addTags()
 +getEmail()
 +getPassword()
@@ -30,34 +29,24 @@ Packages to be imported:
 +setEmail()
 +setName()
 +setSecurity()
-+switchUser()
 +readDesc()
 +removeUser()
 +writeDesc()
-------------------------------------------
-
-
--------Employee-------
-*User
-	//securityClearance: Low
+-------Employee extends User-----------
+securityClearance: Low
 +address: String
 +phone: String
 +age: short
 +currentJob: Job
-+resume: .pdf file //uploaded
-  pdf file, cannot be changed
-  in program
-+notes: String //written to
-  embedded file using
-  BufferedWritter
++resume: .pdf file //uploaded pdf file, cannot be changed in program
++notes: String //written to embedded file using BufferedWriter
 +jobHistory: ArrayList<Job>
 +tasksPreformed: int
 +softSkills:ArrayList<Skill>
 +talents:ArrayList<String>
 +gifts:ArrayList<String>
-+evals:
-  ArrayList<Evaluations>
-	+addJobHistory()
++evals:ArrayList<Evaluations>
++addJobHistory()
 +addSoftSkill()
 +addTalent()
 +addGift()
@@ -86,51 +75,51 @@ Packages to be imported:
 +removeGifts()
 +removeEvals()
 +writeNotes()
-------------------------------------------
 
 
+---------Abstract Manager-----------
+*Employee
 
--------Manager-------
-*User
-	//securityClearance: Medium
+//securityClearance: Medium
 +employees: ArrayList<Employee>
 
-
-	+returnData(Employee)
++returnData(Employee)
 +editTags(Employee) 
 +editData(Employee)
-------------------------------------------
 
 
-
-
--------Admin-------
+--------Admin----------
 *Manager
-	//securityClearance: High
+//securityClearance: High
 
-
-	+returnData(Manager)
++returnData(Manager)
 +editTags(Manager) 
 +editData(Manager)
-	Helper
-//Used to store helpful methods 
-	
 
-	+sortSearch(tag t)
+------General Manager-------
+*Manager
+//securityClearance:
++employees: ArrayList<Employee>
+
++returnData(Employee)
++editTags(Employee) 
++editData(Employee)
+
+---------Helper--------
+//Used to store helpful methods 
+
++sortSearch(tag t)
 +writeToFile()
 +readFile()
-------------------------------------------
 
 
-
--------Job-------
+-------Job--------
 //Used as a template for job history
-	+companyName: String
++companyName: String
 +companyTitle: String
 +timeWorked: String
-+skillsLearned:
-  ArrayList<Skill>
-	+getCompanyName()
++skillsLearned: ArrayList<Skill>
++getCompanyName()
 +getCompanyTitle()
 +getTimeWorked()
 +getSkillsLearned()
@@ -139,53 +128,171 @@ Packages to be imported:
 +setTimeWorked()
 +addSkill()
 +removeSkill()
-------------------------------------------
 
-
-
--------Skill-------
+-------Skill--------
 //Holds info on each skill
-	+proficiency: enum
++proficiency: enum
 +skillName: String
-	+setProficiency(enum n)
++setProficiency(enum n)
 +getProficiency()
-	Evaluations
+
+--------Evaluations---------
 //basic template for management evaluation
-	+evaluator: String
++evaluator: String
 +date: String
 +mentalState: String
 +notes: String //written to file using BufferedWriter
-	+getEvaluator()
++getEvaluator()
 +getEvalDate()
 +getMentalState()
-+getNotes() //returns link to
-  notes rather than string
++getNotes() //returns link to notes rather than string
 +setEvaluator()
 +setDate()
 +setMentalState()
 +writeNotes()
-------------------------------------------
 
-
-
--------Task-------
+--------Task---------
 // what job tasks were performed for the list of job tasks performed
-	+taskName: String
++taskName: String
 +date: String
-	+getTaskName()
++getTaskName()
 +getDate()
 +setTaskName()
 +setDate()
-------------------------------------------
+
+---------GUI-----------
+enum Page = {mainPage, searchPage, lastWorkerPage, ect.}
++JFrame mainScreen
++Page previousPage
++Page nextPage
++Page currentPage
++Worker lastWorker
+//implement how to do back and forward arrows, there needs to be a form of list for pages that I have been to
+//linkedQueue?
++openHomePage()
++openWorker(Worker w)
++openSearch()
++openLogin()
++switchUser()
++shutDown()
++start()
++openPage(Page)
 
 
+--------Driver / Main method---------
+//This is the class that is run when you want to actually run the program
++main(String[] args)
 
--------GUI-------
+	Class
+	Properties
+	Methods
+	Person
++name
++age
++email
++password
++clearance
++tags
++2 person constructors
++getters and setters for each property
++overroad toString
+Employee
+*Person
++address
++phone
++currJob
++tasksPerformed
++jobHistory
++softSkills
++talents
++gifts
++evals
+
++3 employee constructors
++getters and setters for each property
++add and remove methods for each collection of items
+
+Manager
+*Employee
++employees
++clearance
+
++2 manager constructors
++getEmployees()
++returnData()
++editData()
 
 
-	+
-------------------------------------------
+--------Admin-----------
+[Unimplemented]
 
-	
+-----------Helper------------
 
-If you guys can think of any abstraction or way to make things inherit more instead plz help
++validateLogin()
++stringToCharArray()
++charArrayToString()
+
+----------Job---------------
+
+
++companyName
++companyTime
++timeWorked
++skillsLearned
++1 constructor
++getters for companyName, companyTime, and timeWorked
+
+
+----------HardSkill-----------
++title
++level
++1 constructor
++getters and setters for each property
++displayDetails()
+
+------------Evaluations--------------
++evaluator
++date
++mentalState
++notes
++1 constructor
++getters and setters for each property
+
+-------------Task----------------
++taskName
++date
++1 constructor
++getters and setters for each property
+
+
+----------GUI-----------------
++frame
++cardLayout
++primaryPage
++history
++currentPage
++results
++profile
++home
++me
++hasInitialized
++1 constructor
++homePage()
++profile()
++taskBar()
++initialized()
++back()
++forward()
++addHistory()
++search()
++openRegistrationForm()
++registerUser()
++openEditForm()
++editUser()
++deleteUser()
+
+----------Driver / Main method--------------
+
++main(String[] args)
++SetUp()
+
