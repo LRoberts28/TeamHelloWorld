@@ -4,12 +4,15 @@ Packages to be imported:
     3. BufferedWritter
 
 
-
+Format:
 -------Class-------
 	Class
 	Properties
 	Methods
 	User
+
+Before completion:
+--------User--------
 +email: String
 +password: String
 +name: String
@@ -186,7 +189,10 @@ enum Page = {mainPage, searchPage, lastWorkerPage, ect.}
 	Class
 	Properties
 	Methods
-	Person
+
+
+After completion:
+--------Person--------
 +name
 +age
 +email
